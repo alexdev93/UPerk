@@ -1,52 +1,66 @@
-'use client'
+"use client";
 
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 
-const Subscrib: React.FC = () => {
+export function Subscribe() {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Subscribed with email:", email);
+    // Handle subscription logic here
+    console.log("Subscribing email:", email);
+    // Reset form
+    setEmail("");
   };
 
   return (
-    <div className="flex justify-center items-center py-8">
-      <div className="bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-lg p-8 w-full max-w-4xl flex flex-col md:flex-row justify-between items-center">
-        {/* Left Section - Text */}
-        <div className="text-white mb-6 md:mb-0 md:mr-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
-            STAY AHEAD WITH THE LATEST IN AI!
+    <div
+      className="w-full max-w-[1280px] mx-auto rounded-xl min-h-[266px]  p-8 text-white my-10"
+      style={{
+        background: "linear-gradient(to right, #2465EA, #298AF0, #2B9CF3)",
+      }}
+    >
+      <div className="grid gap-6 md:grid-cols-2 items-center">
+        <div className="space-y-4">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+            Stay Ahead With The Latest In AI!
           </h2>
-          <p className="text-sm md:text-base">
-            At Universal Peek, we share insights on audio AI innovations
+          <p className="text-blue-50">
+            At Universal Park, we share insights on state AI innovations
             transforming web development, customer service, and HR recruitment.
-            Discover how AI can elevate your business.
+            Discover how AI works and matters!
           </p>
         </div>
 
-        {/* Right Section - Email Input and Button */}
-        <div className="w-full md:w-auto">
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <input
-              type="email"
-              placeholder="yourname@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full md:w-64 p-3 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              required
-            />
+        <div className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium ">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
+                className="w-full px-3 py-2 rounded-[7px] text-black bg-white mt-2 h-[43px]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
             <button
-              onClick={handleSubmit}
-              className="w-full md:w-auto bg-gray-900 text-white font-semibold py-3 px-6 rounded-md hover:bg-gray-800 transition"
+              type="submit"
+              className="w-full mt-3 h-[43px] bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 rounded-[7px]"
             >
-              SUBSCRIBE NOW
+              Subscribe Now
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default Subscrib;
+
+export default Subscribe;

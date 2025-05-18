@@ -19,9 +19,14 @@ const Header = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="relative flex flex-col items-center justify-center text-center mt-[60px] px-4">
+      <div className="relative flex flex-col items-center justify-center text-center mt-[20px] px-4">
         {/* Glowing Background Behind the Mic */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-[#1e293b] opacity-70 blur-[60px] z-[-1]" />
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full opacity-50 blur-[85px] z-[-1]"
+          style={{
+            background: "linear-gradient(to bottom, #1A3C6D, #4A9AD4, #B0E7FF)",
+          }}
+        />
         {/* Mic Image */}
         <Image
           src={"/images/hero.svg"}
@@ -34,9 +39,12 @@ const Header = () => {
           Powered by Universal Perk
         </p>
         {/* Title */}
-        <Heading level={1} >
+        <Heading level={1}>
           <div className="mb-[-30px]">
-            <span className="text-[#2ca2f4]">CUSTOM AI</span> THAT SELLS,
+            <span className="bg-gradient-to-r from-[#2563EB] via-[#2FBAF8] to-[#34E5FF] bg-clip-text text-transparent">
+              CUSTOM AI {" "}
+            </span>
+            THAT SELLS,
           </div>
           <br className="hidden sm:block " /> SUPPORTS AND SCALE WITH YOU
         </Heading>

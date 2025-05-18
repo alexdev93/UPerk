@@ -5,12 +5,10 @@ import Banner from "../common/Banner";
 const TechStackSection = () => {
   const techLogos = [
     { name: "Node.js", path: "/icons/tech/node.svg" },
-    { name: "JS", path: "/icons/tech/js.svg" },
     { name: "Angular", path: "/icons/tech/angular.svg" },
     { name: "Vue.js", path: "/icons/tech/vue.svg" },
     { name: "Flutter", path: "/icons/tech/flutter.svg" },
     { name: "Java", path: "/icons/tech/java.svg" },
-    { name: "Vue.js", path: "/icons/tech/vue.svg" },
     { name: "React", path: "/icons/tech/react.svg" },
     { name: "JS", path: "/icons/tech/js.svg" },
     { name: "AWS", path: "/icons/tech/aws.svg" },
@@ -25,7 +23,7 @@ const TechStackSection = () => {
         />
 
         {/* Tech Logos Grid */}
-        <div className="grid grid-cols-5 gap-6 justify-items-center mt-12">
+        <div className="flex justify-center gap-9 flex-wrap mt-5 w-[550px] mx-auto">
           {techLogos.map((tech, index) => (
             <div
               key={index}

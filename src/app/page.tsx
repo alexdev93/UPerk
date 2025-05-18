@@ -8,6 +8,7 @@ import AIInsightsTrends from "@/components/ai-insights-trends";
 import Subscrib from "@/components/subscribe/Subscrib";
 import TechStackSection from "@/components/technologies/TechStackSection";
 import DevelopmentPipeline from "@/components/development-pipline";
+import { Footer } from "@/components/footer/Fotter";
 
 export default function Home() {
   return (
@@ -21,8 +22,9 @@ export default function Home() {
       <TransformedBusiness />
       <AIInsightsTrends />
 
-      {/* <TechStackSection   /> */}
-      {/* <Subscrib  /> */}
+      <TechStackSection   />
+      <Subscrib />
+      <Footer  />
     </div>
   );
 }
