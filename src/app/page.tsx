@@ -1,7 +1,6 @@
 import Header from "@/components/header/Header";
 import TrustedBy from "@/components/trusted-by/TrustedBy";
 import Support from "@/components/support";
-import WorkFlow from "@/components/MVP-for-startup";
 import AICapabilitiesForBUsiness from "@/components/ai-capabilities-for-business";
 import TransformedBusiness from "@/components/transformed-business";
 import AIInsightsTrends from "@/components/ai-insights-trends";
@@ -9,6 +8,7 @@ import Subscrib from "@/components/subscribe/Subscrib";
 import TechStackSection from "@/components/technologies/TechStackSection";
 import DevelopmentPipeline from "@/components/development-pipline";
 import { Footer } from "@/components/footer/Fotter";
+import ProjectPlanningSteps from "@/components/MVP-for-startup";
 
 export default function Home() {
   return (
@@ -16,15 +16,15 @@ export default function Home() {
       <Header />
       <TrustedBy />
       <Support />
-      {/* <WorkFlow  /> */}
+      <ProjectPlanningSteps  />
       {/* <AICapabilitiesForBUsiness /> */}
-      <DevelopmentPipeline  />
+      {/* <DevelopmentPipeline /> */}
       <TransformedBusiness />
       <AIInsightsTrends />
 
-      <TechStackSection   />
+      <TechStackSection />
       <Subscrib />
-      <Footer  />
+      <Footer />
     </div>
   );
 }

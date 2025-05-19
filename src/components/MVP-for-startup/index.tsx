@@ -1,14 +1,14 @@
 import React from "react";
 import Banner from "../common/Banner";
-import WorkFlowSteps from "./WorkFlowSteps";
+import ProjectPlanningSteps from "./WorkFlowSteps";
 const WorkFlow = () => {
   return (
-    <div>
+    <div className="mt-50">
       <Banner
         heading="90-Day MVP for Startups: Launch Fast, Validate & Iterate"
         paragraph="Build, launch, and validate your startup’s MVP in 90 days—fast-track your way to product-market fit."
       />
-      <WorkFlowSteps />
+      <ProjectPlanningSteps />
     </div>
   );
 };

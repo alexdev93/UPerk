@@ -43,7 +43,7 @@ const TransformedBusiness = () => {
         paragraph="Discover real-life success stories of startups that have overcome challenges through our innovative AI solutions, driving rapid growth and improved performance."
       />
       <div className="flex justify-center mx-auto mt-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-18">
+        <div className="flex justify-center gap-8 flex-wrap">
           {businessData.map((business, index) => (
             <BusinessCard
               key={index}

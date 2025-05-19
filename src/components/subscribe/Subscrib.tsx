@@ -22,11 +22,11 @@ export function Subscribe() {
       }}
     >
       <div className="grid gap-6 md:grid-cols-2 items-center">
-        <div className="space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+        <div className="space-y-4 max-w-[570px] w-full">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#DEE4EA]">
             Stay Ahead With The Latest In AI!
           </h2>
-          <p className="text-blue-50">
+          <p className="text-[#DEE4EA]">
             At Universal Park, we share insights on state AI innovations
             transforming web development, customer service, and HR recruitment.
             Discover how AI works and matters!
@@ -36,7 +36,10 @@ export function Subscribe() {
         <div className="space-y-4">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium ">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-[#DEE4EA] "
+              >
                 Email Address
               </label>
               <input
@@ -51,7 +54,7 @@ export function Subscribe() {
             </div>
             <button
               type="submit"
-              className="w-full mt-3 h-[43px] bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 rounded-[7px]"
+              className="w-full mt-3 h-[43px] bg-gray-900 hover:bg-gray-800 text-[#969696] font-medium py-2 rounded-[7px]"
             >
               Subscribe Now
             </button>
