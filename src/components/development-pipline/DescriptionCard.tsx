@@ -1,15 +1,17 @@
 import React from "react";
-
-const DescriptionCard = ({ title, description }) => {
+import { Heading } from "../common/Heading";
+import { Paragraph } from "../common/Paragraph";
+const DescriptionCard = ({ title, description }: {title: string | undefined, description:string | undefined}) => {
   return (
-    <div className="bg-gray-900 text-white p-6 md:p-8 rounded-lg flex flex-col gap-4 w-full max-w-2xl">
+    <div className="dark:bg-[#222222] bg-[#F8F8F8] text-white p-6 md:p-8 rounded-lg flex flex-col gap-4  max-w-[500px] w-full h-[203px]">
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-xl font-bold">
-          {title.charAt(0)}
-        </div>
-        <h2 className="text-2xl md:text-3xl font-bold uppercase">{title}</h2>
+        <Heading level={3} className="dark:text-[#E8E9EA] text-[#272A2D] ">
+          {title}
+        </Heading>
       </div>
-      <p className="text-gray-300 text-sm md:text-base">{description}</p>
+      <Paragraph className="text-[#272A2D] dark:text-[#E8E9EA] font-[200]">
+        {description}
+      </Paragraph>
     </div>
   );
 };

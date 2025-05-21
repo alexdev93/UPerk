@@ -10,7 +10,7 @@ type BusinessCardProps = {
 const BusinessCard = ({ logoUrl, name, description }: BusinessCardProps) => {
   return (
     <div
-      className="text-left max-w-[343px] max-h-[331px] mx-auto text-white rounded-lg shadow-lg p-6 
+      className="text-left w-[343px] h-[331px]  text-white rounded-lg shadow-lg p-6 
     bg-gradient-to-b from-[#F6F6F6] to-[#FFFFFF]
     dark:bg-gradient-to-b dark:from-[#292929] dark:to-[#242424]"
     >

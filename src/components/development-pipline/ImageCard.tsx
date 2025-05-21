@@ -2,18 +2,19 @@
 import React from "react";
 import Image from "next/image";
 
-const ImageCard = ({ title, imageUrl }) => {
+const ImageCard = ({ title, imageUrl}: {title:string | undefined, imageUrl:string | undefined}) => {
   return (
-    <div className="relative w-full max-w-2xl h-48 md:h-64 rounded-lg overflow-hidden">
-      <Image
+    <div className=" dark:bg-[#222222] relative max-w-[500px] w-full rounded-lg overflow-hidden h-[203px]">
+   { imageUrl ?  <Image
         src={imageUrl}
-        alt={title}
-        layout="fill"
-        objectFit="cover"
-        className="opacity-50"
-      />
+        alt={title || "image"}
+        width={500}
+        height={203}
+        className=" dark:opacity-40 "
+      /> : ""}
+
       <div className="absolute inset-0 flex items-center justify-center">
-        <h2 className="text-white text-3xl md:text-4xl font-bold uppercase text-center px-4">
+        <h2 className="text-[#E8E9EA] text-3xl md:text-4xl font-bold uppercase text-center px-4">
           {title}
         </h2>
       </div>

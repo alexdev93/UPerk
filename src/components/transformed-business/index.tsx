@@ -37,24 +37,28 @@ const businessData = [
 
 const TransformedBusiness = () => {
   return (
-    <>
+    <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[120px]">
       <Banner
         heading="See How We’ve Transformed Businesses with Our AI Expertise"
         paragraph="Discover real-life success stories of startups that have overcome challenges through our innovative AI solutions, driving rapid growth and improved performance."
       />
-      <div className="flex justify-center mx-auto mt-6">
-        <div className="flex justify-center gap-8 flex-wrap">
-          {businessData.map((business, index) => (
-            <BusinessCard
-              key={index}
-              logoUrl={business.logoUrl}
-              name={business.name}
-              description={business.description}
-            />
-          ))}
-        </div>
+      <div className="flex relative flex-wrap justify-center gap-14 p-6  min-h-screen ">
+        {/* <div
+          style={{
+            background: "linear-gradient(to bottom, #2563EB, #2CA2F4, #34E5FF)",
+          }}
+          className="h-30 w-full z-[-10] blur-3xl md:overflow-x-visible overflow-x-auto absolute top-1/2 -translate-y-1/2 "
+        ></div> */}
+        {businessData.map((business, index) => (
+          <BusinessCard
+            key={index}
+            logoUrl={business.logoUrl}
+            name={business.name}
+            description={business.description}
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

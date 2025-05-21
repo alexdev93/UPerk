@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Banner from "./Banner"; // Assuming Banner component is already built
 import Image from "next/image";
@@ -10,21 +10,37 @@ interface CardProps {
   title: string;
   subtitle: string;
   description: string;
-  iconUrl: string;
+  iconUrlLight: string; // Icon for light mode
+  iconUrlDark: string; // Icon for dark mode
 }
 
-const Card = ({ title, subtitle, description, iconUrl }: CardProps) => {
+const Card = ({
+  title,
+  subtitle,
+  description,
+  iconUrlLight,
+  iconUrlDark,
+}: CardProps) => {
   return (
-    <div className="dark:bg-[#1e1e1e] bg-white text-white rounded-xl py-6 px-[13px] w-[236px] h-[205px] shadow-lg flex-shrink-0">
+    <div className="dark:bg-[#1e1e1e] bg-white text-white rounded-xl py-6 px-[13px] w-[260px] h-[205px] shadow-lg flex-shrink-0">
       <div className="flex items-center mb-4">
-        {iconUrl && (
-          <Image
-            src={iconUrl}
-            alt="icon"
-            className="mr-2 mb-3"
-            width={20}
-            height={20}
-          />
+        {(iconUrlLight || iconUrlDark) && (
+          <>
+            <Image
+              src={iconUrlLight}
+              alt="icon"
+              className="mr-2 mb-3 dark:hidden" // Show in light mode
+              width={20}
+              height={20}
+            />
+            <Image
+              src={iconUrlDark}
+              alt="icon"
+              className="mr-2 mb-3 hidden dark:block" // Show in dark mode
+              width={20}
+              height={20}
+            />
+          </>
         )}
         <div>
           <Heading
@@ -41,7 +57,10 @@ const Card = ({ title, subtitle, description, iconUrl }: CardProps) => {
       <Paragraph className="text-[#272A2D] dark:text-[#A5A5A5] text-sm mb-4">
         {description}
       </Paragraph>
-      <a href="#" className="text-blue-500 text-sm font-medium hover:underline">
+      <a
+        href="#"
+        className="dark:text-[#2563EB] text-[#2563EB]  text-sm underline font-medium hover:underline"
+      >
         Show More
       </a>
     </div>
@@ -56,49 +75,56 @@ export default function AICapabilitiesForBusiness() {
       subtitle: "AI Chatbots & Voice Assistants",
       description:
         "Maximize your sales potential with AI-driven lead generation and automated sales processes.",
-      iconUrl: "/icons/service/leade-generation.svg",
+      iconUrlLight: "/icons/service/light/leade-generation-light.svg",
+      iconUrlDark: "/icons/service/leade-generation.svg",
     },
     {
       title: "Customer Support AI",
       subtitle: "Intelligent Chat & Voice Agents",
       description:
         "Enhance customer satisfaction with 24/7 AI-powered support and faster response times.",
-      iconUrl: "/icons/service/customer-support.svg",
+      iconUrlLight: "/icons/service/light/customer-support-light.svg",
+      iconUrlDark: "/icons/service/customer-support.svg",
     },
     {
       title: "AI Recruiting Assistant",
       subtitle: "Candidate Sourcing & Screening",
       description:
         "Streamline hiring with AI that sources, screens, and ranks candidates efficiently.",
-      iconUrl: "/icons/service/Recruiting-assistant.svg",
+      iconUrlLight: "/icons/service/light/Recruiting-assistant-light.svg",
+      iconUrlDark: "/icons/service/Recruiting-assistant.svg",
     },
     {
       title: "Virtual Assistant",
       subtitle: "Appointment Scheduling & Reminders",
       description:
         "Boost productivity with an AI assistant that manages tasks, schedules, and more.",
-      iconUrl: "/icons/service/vertual-assistant.svg",
+      iconUrlLight: "/icons/service/light/vertual-assistant-light.svg",
+      iconUrlDark: "/icons/service/vertual-assistant.svg",
     },
     {
       title: "Mobile App Development",
       subtitle: "AI-Driven App Development",
       description:
         "Create intuitive mobile apps with AI-powered development and seamless user experiences.",
-      iconUrl: "/icons/service/mobil-app.svg",
+      iconUrlLight: "/icons/service/light/mobile-app-light.svg",
+      iconUrlDark: "/icons/service/mobile-app.svg",
     },
     {
       title: "Web Development",
       subtitle: "Responsive Web Solutions",
       description:
         "Build stunning, responsive websites with AI-driven design and development.",
-      iconUrl: "/icons/service/web-app.svg",
+      iconUrlLight: "/icons/service/light/web-app-light.svg",
+      iconUrlDark: "/icons/service/web-app.svg",
     },
     {
       title: "Cloud Services & Integration",
       subtitle: "Scalable Cloud Solutions",
       description:
         "Optimize your business with secure, scalable cloud solutions and seamless integrations.",
-      iconUrl: "/icons/service/cloud-solution.svg",
+      iconUrlLight: "/icons/service/light/cloud-solution-light.svg",
+      iconUrlDark: "/icons/service/cloud-solution.svg",
     },
   ];
 
@@ -125,7 +151,8 @@ export default function AICapabilitiesForBusiness() {
               title={card.title}
               subtitle={card.subtitle}
               description={card.description}
-              iconUrl={card.iconUrl}
+              iconUrlLight={card.iconUrlLight}
+              iconUrlDark={card.iconUrlDark}
             />
           ))}
         </div>

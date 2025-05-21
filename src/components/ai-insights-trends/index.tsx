@@ -19,7 +19,7 @@ const AIInsightsTrends = () => {
       title: "Best AI Tools For Content Creation In 2025",
     },
     {
-      imgUrl: "/images/insights/voice-ai-health.svg",
+      imgUrl: "/images/insights/voice-assistant.svg",
       buttonText: "AI Assistant",
       description:
         "Explore how voice assistants are enhancing customer service and engagement in businesses today",
@@ -36,13 +36,13 @@ const AIInsightsTrends = () => {
 
   return (
     <>
-      <div className="">
-          <Banner
-            heading="Explore the World of AI Insights and Trends"
-            paragraph="Uncover inspiring success stories of startups that have leveraged our innovative AI solutions to tackle challenges, accelerate growth, and enhance performance."
-          />
+      <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[120px]">
+        <Banner
+          heading="Explore the World of AI Insights and Trends"
+          paragraph="Uncover inspiring success stories of startups that have leveraged our innovative AI solutions to tackle challenges, accelerate growth, and enhance performance."
+        />
       </div>
-      <div className="flex justify-center gap-10 p-4">
+      <div className="flex justify-center gap-10 p-4 overflow-x-auto ">
         {cardsData.map((card, index) => (
           <AIInsightCard
             key={index}

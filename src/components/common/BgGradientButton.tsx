@@ -5,17 +5,21 @@ type GradientButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  width?: string;
 };
 
 const GradientButton: React.FC<GradientButtonProps> = ({
   children,
   onClick,
   className = "",
+  width,
 }) => {
   return (
     <button
       onClick={onClick}
-      className={`  w-[215px] bg-gradient-to-r from-[#2563EB] via-[#2CA2F4] to-[#2CA2F4] text-white font-medium py-2 px-4  shadow-md hover:opacity-90 transition ${className}`}
+      className={`bg-gradient-to-r from-[#2563EB] via-[#2CA2F4] to-[#2CA2F4] text-[#EAEAEA] font-medium py-2 px-4 shadow-md hover:opacity-90 transition ${
+        width ? `w-[${width}]` : "w-[215px]"
+      } ${className}`}
     >
       {children}
     </button>

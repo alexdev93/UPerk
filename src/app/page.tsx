@@ -16,15 +16,14 @@ export default function Home() {
       <Header />
       <TrustedBy />
       <Support />
-      <ProjectPlanningSteps  />
-      {/* <AICapabilitiesForBUsiness /> */}
-      {/* <DevelopmentPipeline /> */}
+      <ProjectPlanningSteps />
+      <AICapabilitiesForBUsiness />
+      <DevelopmentPipeline />
       <TransformedBusiness />
       <AIInsightsTrends />
-
       <TechStackSection />
       <Subscrib />
-      <Footer />
+      <Footer />   
     </div>
   );
 }

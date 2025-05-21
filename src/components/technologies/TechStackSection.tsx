@@ -15,7 +15,7 @@ const TechStackSection = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-gray-900 to-gray-800 py-16">
+    <section className="bg-gradient-to-b dark:from-gray-900 to-gray-800 py-16">
       <div className="container mx-auto px-4 text-center">
         <Banner
           heading="The Key Technologies We Use To Build Smart AI Solutions"
@@ -23,7 +23,7 @@ const TechStackSection = () => {
         />
 
         {/* Tech Logos Grid */}
-        <div className="flex justify-center gap-9 flex-wrap mt-5 w-[550px] mx-auto">
+        <div className="flex justify-center gap-9 flex-wrap mt-5 sm:w-[550px] mx-auto">
           {techLogos.map((tech, index) => (
             <div
               key={index}

@@ -15,7 +15,7 @@ const AIInsightCard: React.FC<CardProps> = ({
   title,
 }) => {
   return (
-    <div className="max-w-[273px]  text-white rounded-lg shadow-lg overflow-hidden">
+    <div className="max-w-[273px] flex-shrink-0  text-white rounded-lg shadow-lg ">
       <Image
         src={imgUrl}
         alt="Card Image"
@@ -24,7 +24,7 @@ const AIInsightCard: React.FC<CardProps> = ({
         height={200}
       />
       <div className="p-4">
-        <span className="inline-block bg-black text-xs text-[#2563EB] font-semibold px-2 py-1 rounded-[10.5px] mb-2">
+        <span className="inline-block dark:bg-black bg-[#2664EC1A] text-xs text-[#2563EB] font-semibold px-2 py-1 rounded-[10.5px] mb-2">
           {buttonText}
         </span>
         <Heading level={4} className="text-[#2A2A33] dark:text-[white] mb-2">
@@ -33,7 +33,7 @@ const AIInsightCard: React.FC<CardProps> = ({
         <Paragraph className=" text-[12px] text-[#2A2A33] dark:text-[#A5A5A5] mb-4">
           {description}
         </Paragraph>
-        <button className="text-blue-400 font-semibold hover:underline">
+        <button className="text-blue-400  font-semibold hover:underline">
           Read Now →
         </button>
       </div>

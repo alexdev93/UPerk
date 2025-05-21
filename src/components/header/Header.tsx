@@ -6,14 +6,14 @@ import { Heading } from "@/components/common/Heading";
 import { Paragraph } from "../common/Paragraph";
 const Header = () => {
   return (
-    <div>
+    <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[42px]">
       {/* Top Bar */}
-      <div className="flex justify-between max-w-[1280px] mx-auto mt-[24px]">
+      <div className="flex justify-between">
         <div>
           <Image src={"/icons/logo.svg"} width={60} height={60} alt="logo" />
         </div>
 
-        <div>
+        <div className="mt-[2px]">
           <BorderGradientButton text="Build Your AI Agent" />
         </div>
       </div>
@@ -24,7 +24,7 @@ const Header = () => {
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full opacity-50 blur-[85px] z-[-1]"
           style={{
-            background: "linear-gradient(to bottom, #1A3C6D, #4A9AD4, #B0E7FF)",
+            background: "linear-gradient(to bottom, #2563EB, #2CA2F4, #34E5FF)",
           }}
         />
         {/* Mic Image */}
@@ -35,21 +35,21 @@ const Header = () => {
           alt="hero"
           className="mb-4"
         />
-        <p className="text-sm text-[#A6A6A6] mt-8 mb-6">
+        <Paragraph className="text-sm  dark:text-[#E8E9EA] text-[#272A2D] mt-8 mb-6">
           Powered by Universal Perk
-        </p>
+        </Paragraph>
         {/* Title */}
         <Heading level={1}>
-          <div className="mb-[-30px]">
+          <div className="sm:mb-[-30px] dark:text-[#EAEAEA] text-[#272A2D]">
             <span className="bg-gradient-to-r from-[#2563EB] via-[#2FBAF8] to-[#34E5FF] bg-clip-text text-transparent">
-              CUSTOM AI {" "}
+              CUSTOM AI{" "}
             </span>
             THAT SELLS,
           </div>
-          <br className="hidden sm:block " /> SUPPORTS AND SCALE WITH YOU
+          <br className="hidden sm:block  " /> SUPPORTS AND SCALE WITH YOU
         </Heading>
-        {/* Subtitle */}
 
+        {/* Subtitle */}
         <Paragraph className="dark:text-[#A6A6A6] text-[#797979] mt-4 max-w-xl">
           Close more deals, cut response time and slash costs – 24/7 automation
           that sounds human and works non-stop{" "}
