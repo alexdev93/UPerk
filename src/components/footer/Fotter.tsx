@@ -3,7 +3,8 @@ import Image from "next/image";
 export function Footer() {
   return (
     <div className="mx-4 sm:mx-0">
-      <footer className="bg-gray-50  mx-auto rounded-[12px] max-w-[1280px]">
+      <footer className="bg-gradient-to-r from-[#F8F8F8] to-[#F6F6F6] dark:bg-gradient-to-r dark:from-[#1C1C1C] dark:to-[#1C1C1C] mx-auto rounded-[12px] max-w-[1280px]">
+        {" "}
         <div className="container mx-auto px-20 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Logo Column */}
@@ -11,13 +12,13 @@ export function Footer() {
               <div className="flex items-start space-x-2">
                 <div className="relative w-10 h-10">
                   <Image
-                  src={"/icons/logo.svg"}
+                    src={"/icons/logo.svg"}
                     width={200}
                     height={200}
                     alt="logo"
                   />
                 </div>
-                <div className="font-bold text-gray-800 text-lg tracking-tight">
+                <div className="font-bold text-gray-800 dark:text-[#DEE4EA] text-lg tracking-tight">
                   UNIVERSAL
                   <br />
                   PERK
@@ -25,9 +26,11 @@ export function Footer() {
               </div>
             </div>
             {/* Solutions Column */}
-            <div className="sm:border-l sm:border-r mr-0 sm:mr-6 border-l-0 border-r-0  border-gray-200 sm:px-14 ">
-              <h3 className="text-gray-800 font-semibold mb-4">Solutions</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
+            <div className="sm:border-l sm:border-r mr-0 sm:mr-6 border-l-0 border-r-0  border-gray-200  dark:border-[black] sm:px-14 ">
+              <h3 className="text-gray-800 font-semibold mb-4 dark:text-[#E8E9EA]">
+                Solutions
+              </h3>
+              <ul className="space-y-2 font-extralight text-sm text-gray-600 dark:text-[#E8E9EA]">
                 <li>
                   <Link
                     href="#"
@@ -64,8 +67,10 @@ export function Footer() {
             </div>
             {/* Contact Column */}
             <div>
-              <h3 className="text-gray-800 font-semibold mb-4">Solutions</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h3 className="text-gray-800 dark:text-[#E8E9EA]  mb-4 ">
+                Solutions
+              </h3>
+              <ul className="space-y-2   font-extralight text-sm text-gray-600 dark:text-[#E8E9EA]">
                 <li>12785 Research Blvd, Suite 125</li>
                 <li>Austin TX 78750</li>
                 <li className="pt-2">422 Longview St STE A,</li>
