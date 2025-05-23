@@ -12,7 +12,7 @@ import ProjectPlanningSteps from "@/components/MVP-for-startup";
 
 export default function Home() {
   return (
-    <div className="mb-[60px]">
+    <div className="mb-[30px]">
       <Header />
       <TrustedBy />
       <Support />

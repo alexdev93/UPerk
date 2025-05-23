@@ -1,25 +1,23 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import Image from "next/image";
 import BorderGradientButton from "../common/BorderGradientButton";
 import GradientButton from "../common/BgGradientButton";
 import { Heading } from "@/components/common/Heading";
 import { Paragraph } from "../common/Paragraph";
+import Navebar from "./Navebar";
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  
   return (
-    <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[42px]">
-      {/* Top Bar */}
-      <div className="flex justify-between">
-        <div>
-          <Image src={"/icons/logo.svg"} width={60} height={60} alt="logo" />
-        </div>
-
-        <div className="mt-[2px]">
-          <BorderGradientButton text="Build Your AI Agent" />
-        </div>
-      </div>
-
+    <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[25px]">
+      <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
       {/* Hero Section */}
-      <div className="relative flex flex-col items-center justify-center text-center mt-[20px] px-4">
+      <div className="relative flex flex-col items-center justify-center text-center mt-[40px] px-4">
         {/* Glowing Background Behind the Mic */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full opacity-50 blur-[85px] z-[-1]"
