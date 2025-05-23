@@ -49,6 +49,8 @@ const TrustedBy = () => {
           />
         </div>
       </div>
+
+   
     </div>
   );
 };

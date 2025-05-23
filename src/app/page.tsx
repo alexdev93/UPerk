@@ -9,12 +9,17 @@ import TechStackSection from "@/components/technologies/TechStackSection";
 import DevelopmentPipeline from "@/components/development-pipline";
 import { Footer } from "@/components/footer/Fotter";
 import ProjectPlanningSteps from "@/components/MVP-for-startup";
-
+import Chatbot from "@/components/chatbot/Chatbot";
 export default function Home() {
   return (
     <div className="mb-[30px]">
       <Header />
-      <TrustedBy />
+      <div className="flex justify-center">
+        <TrustedBy />
+        <div className="mt-35 mr-7">
+          <Chatbot  />
+        </div>
+      </div>
       <Support />
       <ProjectPlanningSteps />
       <AICapabilitiesForBUsiness />
