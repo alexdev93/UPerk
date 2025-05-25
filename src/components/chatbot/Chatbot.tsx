@@ -1,9 +1,7 @@
 "use client";
-
 import type React from "react";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Send } from "lucide-react";
 
 interface Message {
   id: string;
@@ -23,7 +21,10 @@ const Chatbot = () => {
     },
   ]);
   const [inputValue, setInputValue] = useState("");
+  const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const postendPoint =
+    "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/chatbot";
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -33,7 +34,7 @@ const Chatbot = () => {
     setInputValue(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (inputValue.trim() === "") return;
@@ -48,23 +49,53 @@ const Chatbot = () => {
 
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
+    setIsBotTyping(true);
 
-    // Simulate bot response after a short delay
-    setTimeout(() => {
+    try {
+      // Send POST request to backend
+      const response = await fetch(postendPoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: inputValue }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch response from backend");
+      }
+
+      const data = await response.json();
+      const botResponseText =
+        data.response || "Sorry, I couldn't process your request.";
+
+      // Add bot response
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Thank you for your message. This is a demo response from the Universal Perk Chatbot.",
+        text: botResponseText,
         sender: "bot",
         timestamp: new Date(),
       };
+
       setMessages((prev) => [...prev, botMessage]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error fetching bot response:", error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "Sorry, there was an error connecting to the chatbot. Please try again.",
+        sender: "bot",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsBotTyping(false);
+    }
   };
 
-  // Auto-scroll to bottom when messages change
+  // Auto-scroll to bottom when messages or typing state change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, isBotTyping]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -83,7 +114,7 @@ const Chatbot = () => {
 
       {/* Chat Interface */}
       {isOpen && (
-        <div className=" absolute bottom-24 right-0 w-80 sm:w-96 h-[500px] bg-gray-900 rounded-lg shadow-xl flex flex-col overflow-hidden">
+        <div className="absolute bottom-24 right-0 w-80 sm:w-96 h-[500px] bg-gray-900 rounded-lg shadow-xl flex flex-col overflow-hidden">
           {/* Header */}
           <div className="bg-gray-800 p-4 text-white font-medium flex items-center">
             <Image
@@ -103,13 +134,21 @@ const Chatbot = () => {
                 key={message.id}
                 className={`mb-4 max-w-[80%] ${
                   message.sender === "user"
-                    ? "ml-auto bg-blue-600 text-white"
+                    ? "ml-auto bg-blue-500 text-white"
                     : "mr-auto bg-gray-700 text-gray-100"
                 } rounded-lg p-3`}
               >
                 {message.text}
               </div>
             ))}
+            {isBotTyping && (
+              <div className="mb-4 max-w-[80%] mr-auto bg-gray-700 rounded-lg p-3">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-600 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-600 rounded w-1/2"></div>
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
@@ -124,12 +163,21 @@ const Chatbot = () => {
               onChange={handleInputChange}
               placeholder="Ask anything here"
               className="flex-1 bg-gray-700 text-white rounded-l-lg px-4 py-2 focus:outline-none"
+              disabled={isBotTyping}
             />
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white rounded-r-lg px-4 py-2"
+              className={` text-white rounded-r-lg px-4 py-2  cursor-pointer${
+                isBotTyping ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isBotTyping}
             >
-              <Send size={18} />
+              <Image
+                src={"/images//ai/send.svg"}
+                width={39}
+                height={39}
+                alt="send icon"
+              />
             </button>
           </form>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import type React from "react";
 import Image from "next/image";
 import { Heading } from "../common/Heading";
@@ -9,30 +9,65 @@ import GradientButton from "../common/BgGradientButton";
 interface BlogBannerProps {
   onShowBlogDetail: () => void;
   blogDetail: boolean;
+  blogs: any[]; // Assuming blogs is an array of blog objects
 }
 
 const BlogBanner: React.FC<BlogBannerProps> = ({
   onShowBlogDetail,
   blogDetail,
+  blogs,
 }) => {
+  // Use the first blog or fallback to defaults
+  const blog = blogs[0] || {
+    username: "Unknown",
+    title: "No Blog Available",
+    content: "<p>No content available.</p>",
+  };
+
+  // Extract first paragraph and truncate to ~70 characters
+  const getFirstParagraph = (content: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
+    const firstParagraph = doc.querySelector("p");
+    const text = firstParagraph
+      ? firstParagraph.textContent
+      : "No content available.";
+    return text.length > 70 ? text.substring(0, 67) + "..." : text;
+  };
+
+  // Extract first image URL from content
+  const getFirstImage = (content: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
+    const firstImage = doc.querySelector("img");
+    return firstImage
+      ? firstImage.src
+      : "/images/insights/fallback-blog-image.svg";
+  };
+
   return (
-    <div className="relative  text-white flex flex-col md:flex-row items-center justify-between px-6 py-8 md:px-12 md:py-0">
+    <div className="relative text-white flex flex-col md:flex-row items-center justify-between px-6 py-8 md:px-12 md:py-0">
       {/* Left Section - Text Content */}
       <div className="text-[#E8E9EA] w-full md:w-1/2 space-y-4 flex flex-col justify-center md:py-12">
         <div className="w-[178px] bg-black rounded-[60px] text-center">
           <span className="text-blue-400 text-sm font-medium uppercase tracking-wider">
-            Technology
+            Author: {blog.username}
           </span>
         </div>
         <Heading
           level={1}
-          className="dark:text-[#E8E9EA]  text-4xl text-[#272A2D] md:text-5xl font-extrabold leading-tight"
+          className="dark:text-[#E8E9EA] text-4xl text-[#272A2D] md:text-5xl font-extrabold leading-tight"
         >
-          AI In Finance: <br /> Enhancing <br /> Decision Making
+          {blog.title.split(" ").map((word, index) => (
+            <React.Fragment key={index}>
+              {word}
+              {index < blog.title.split(" ").length - 1 && " "}
+              {index % 3 === 2 && <br />}
+            </React.Fragment>
+          ))}
         </Heading>
         <Paragraph className="text-lg md:text-xl max-w-md dark:text-[#A5A5A5] text-[#A5A5A5]">
-          Investigate How AI Is Being Used In Financial Services For Risk
-          Assessment And Investment Strategies.
+          {getFirstParagraph(blog.content)}
         </Paragraph>
         {!blogDetail ? (
           <GradientButton
@@ -55,8 +90,8 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
       <div className="w-full md:w-1/2 flex justify-center md:justify-end h-full md:mt-0 mt-8">
         <div className="relative w-full h-full">
           <Image
-            src="/images/ai/ai-in-finance.svg"
-            alt="AI holding a credit card"
+            src={getFirstImage(blog.content)}
+            alt={blog.title}
             width={542}
             height={363}
             className="w-full h-full object-cover"

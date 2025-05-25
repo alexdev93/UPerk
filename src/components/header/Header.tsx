@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import BorderGradientButton from "../common/BorderGradientButton";
@@ -6,13 +6,20 @@ import GradientButton from "../common/BgGradientButton";
 import { Heading } from "@/components/common/Heading";
 import { Paragraph } from "../common/Paragraph";
 import Navebar from "./Navebar";
+import GetAQuote from "../get-a-quote/GetAQuote";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
+  const handleQuote = () => {
+    setShowForm(!showForm);
+  };
+
   return (
     <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[25px]">
       <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
@@ -33,7 +40,7 @@ const Header = () => {
           alt="hero"
           className="mb-4"
         />
-        <Paragraph className="text-sm  dark:text-[#E8E9EA] text-[#272A2D] mt-8 mb-6">
+        <Paragraph className="text-sm dark:text-[#E8E9EA] text-[#272A2D] mt-8 mb-6">
           Powered by Universal Perk
         </Paragraph>
         {/* Title */}
@@ -44,17 +51,25 @@ const Header = () => {
             </span>
             THAT SELLS,
           </div>
-          <br className="hidden sm:block  " /> SUPPORTS AND SCALE WITH YOU
+          <br className="hidden sm:block" /> SUPPORTS AND SCALE WITH YOU
         </Heading>
 
         {/* Subtitle */}
         <Paragraph className="dark:text-[#A6A6A6] text-[#797979] mt-4 max-w-xl">
           Close more deals, cut response time and slash costs – 24/7 automation
-          that sounds human and works non-stop{" "}
+          that sounds human and works non-stop
         </Paragraph>
+
+        {/* Get a Quote Form */}
+        {showForm && (
+          <div className="">
+            <GetAQuote />
+          </div>
+        )}
+
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <GradientButton className="rounded-[35px]">
+        <div className="flex flex-col sm:flex-row gap-4 mt-8 cursor-pointer">
+          <GradientButton className="rounded-[35px]" onClick={handleQuote}>
             Get a Quote
           </GradientButton>
           <BorderGradientButton text="Book a Call" />
