@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import type React from "react";
 import Image from "next/image";
 import { Heading } from "../common/Heading";
 import { Paragraph } from "../common/Paragraph";
@@ -9,6 +8,7 @@ import GradientButton from "../common/BgGradientButton";
 interface BlogBannerProps {
   onShowBlogDetail: () => void;
   blogDetail: boolean;
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   blogs: any[]; // Assuming blogs is an array of blog objects
 }
 
@@ -32,7 +32,7 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
     const text = firstParagraph
       ? firstParagraph.textContent
       : "No content available.";
-    return text.length > 70 ? text.substring(0, 67) + "..." : text;
+    return text? text?.length > 70 ? text.substring(0, 67) + "..." : text : "";
   };
 
   // Extract first image URL from content
@@ -58,7 +58,7 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
           level={1}
           className="dark:text-[#E8E9EA] text-4xl text-[#272A2D] md:text-5xl font-extrabold leading-tight"
         >
-          {blog.title.split(" ").map((word, index) => (
+          {blog.title.split(" ").map((word:any, index:any) => (
             <React.Fragment key={index}>
               {word}
               {index < blog.title.split(" ").length - 1 && " "}
