@@ -38,8 +38,8 @@ const AIInsightCard: React.FC<CardProps> = ({
             {description}
           </Paragraph>
         </div>
-        <div className="text-left">
-          <button className="text-blue-400 font-semibold hover:underline">
+        <div className="text-left ">
+          <button className="text-blue-400 cursor-pointer font-semibold hover:underline">
             Read Now →
           </button>
         </div>

@@ -4,16 +4,26 @@ import React, { useEffect, useState } from "react";
 import AIInsightCard from "../ai-insights-trends/AIInsightCard";
 import BlogBanner from "./BlogBanner";
 import { Footer } from "../footer/Fotter";
-import BlogDetail from "./BlogDetail";
+// import BlogDetail from "./BlogDetail";
 import Navebar from "../header/Navebar";
 import axios from "axios";
 import DynamicBlogDetail from "./DynamicBlogDetail";
+interface ArticleData {
+  content: string;
+  fetchedAt: string; // ISO string, e.g., "2025-05-24T19:33:37.636Z"
+  id: string; // UUID, e.g., "2c72e05a-8b59-4230-8269-4723022a3308"
+  link: string; // URL to the article
+  pubDate: string; // Publication date as string, e.g., "2019-01-20 07:16:34"
+  title: string; // Title of the article
+  username: string; // Author's username
+}
+
 const Blog = () => {
   const [blogDetail, setBlogDetail] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<ArticleData[]>([]);
 
-  console.log("see  the blog", blogs)
+  console.log("see  the blog", blogs);
 
   useEffect(() => {
     axios
@@ -37,15 +47,19 @@ const Blog = () => {
   };
 
   // Extract first paragraph from content for AIInsightCard description
-  const getFirstParagraph = (content) => {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const getFirstParagraph = (content: any) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(content, "text/html");
     const firstParagraph = doc.querySelector("p");
-    return firstParagraph ? firstParagraph.textContent : "";
+    return firstParagraph
+      ? firstParagraph.textContent?.substring(0, 143) + "..."
+      : "";
   };
 
   // Extract first image URL from content for AIInsightCard imgUrl
-  const getFirstImage = (content) => {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const getFirstImage = (content: any) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(content, "text/html");
     const firstImage = doc.querySelector("img");
@@ -67,12 +81,12 @@ const Blog = () => {
       {!blogDetail && (
         <div className="p-6 flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
-            {blogs.slice(0, 8).map((blog, index) => (
+            {blogs.slice(0, 8).map((blog) => (
               <AIInsightCard
                 key={blog.id}
                 imgUrl={getFirstImage(blog.content)}
-                buttonText={`Author ${blog.username}`}
-                description={getFirstParagraph(blog.content)}
+                buttonText={`${blog.username}`}
+                description={getFirstParagraph(blog.content) || ""}
                 title={blog.title}
               />
             ))}

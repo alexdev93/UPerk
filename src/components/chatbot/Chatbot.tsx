@@ -23,6 +23,7 @@ const Chatbot = () => {
   const [inputValue, setInputValue] = useState("");
   const [isBotTyping, setIsBotTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const postendPoint =
     "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/chatbot";
 
@@ -97,6 +98,25 @@ const Chatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isBotTyping]);
 
+  // Close chat when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        chatContainerRef.current &&
+        !chatContainerRef.current.contains(event.target as Node) &&
+        !(event.target as HTMLElement).closest('button[onClick="toggleChat"]')
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Chatbot Icon */}
@@ -114,7 +134,10 @@ const Chatbot = () => {
 
       {/* Chat Interface */}
       {isOpen && (
-        <div className="absolute bottom-24 right-0 w-80 sm:w-96 h-[500px] bg-gray-900 rounded-lg shadow-xl flex flex-col overflow-hidden">
+        <div
+          ref={chatContainerRef}
+          className="absolute bottom-24 right-0 w-80 sm:w-96 h-[500px] bg-gray-900 rounded-lg shadow-xl flex flex-col overflow-hidden"
+        >
           {/* Header */}
           <div className="bg-gray-800 p-4 text-white font-medium flex items-center">
             <Image

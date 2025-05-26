@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ChevronLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import BorderGradientButton from "../common/BorderGradientButton";
+import { toast } from "react-toastify";
+import Loader from "../common/Loader";
+
 interface FormData {
   projectType: string;
   additionalInfo: string;
@@ -15,19 +16,54 @@ interface FormData {
   address: string;
 }
 
-const GetAQuote = () => {
+const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false)
+  
   const [formData, setFormData] = useState<FormData>({
     projectType: "",
     additionalInfo: "",
-    budgetRange: "",
-    timeline: "",
+    budgetRange: "5000-10000",
+    timeline: "1-3 month",
     fullName: "",
     emailAddress: "",
     phoneNumber: "",
     company: "",
     address: "",
   });
+
+  useEffect(() => {
+    console.log("see the status", status);
+    if (status === "failed") {
+      toast.error("Form submission failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: "error1",
+        className: "toast-position",
+      });
+    } else if (status === "succeeded") {
+      toast.success("Submited successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: "success1",
+        className: "toast-position",
+      });
+    }
+    setStatus("");
+  }, [status]); // Run effect on status or message change
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
@@ -75,35 +111,59 @@ const GetAQuote = () => {
     console.log("Formatted Data:", formattedData);
 
     try {
+      setLoading(true)
       const response = await axios.post(queotEndpoint, formattedData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-
+      setStatus("succeeded");
       console.log("Success:", response.data);
     } catch (error) {
-      console.error(
-        "Error submitting form:",
-        error.response ? error.response.data : error.message
-      );
+      setStatus("failed");
+
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-start justify-start p-4">
-      <div className="w-full max-w-2xl bg-gray-900 border border-gray-700 rounded-lg">
+    <div className="min-h-screen flex items-start justify-start p-4 z-999">
+      <div className=" dark:bg-[#222222]  rounded-lg md:w-[750px] lg:w-[970px] w-full">
         <div className="p-6">
           <div className="mb-6">
-            <h1 className="text-white text-lg font-medium mb-4">
-              Let's Build Your AI Solution
-            </h1>
-            <div className="flex space-x-1 mb-6">
+            <div className="flex justify-between items-center mb-7">
+              <h1 className="text-white text-lg text-left font-medium">
+                Let&apos;s Build Your AI Solution{" "}
+              </h1>
+              <button
+                onClick={handleQuoteClose}
+                className="text-gray-300 cursor-pointer hover:text-white focus:outline-none"
+                aria-label="Close form"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="flex  gap-9 mb-6">
               <button
                 className={`px-3 py-1.5 text-sm rounded ${
                   currentStep === 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300"
+                    ? "dark:bg-[#244389] text-white"
+                    : "dark:bg-[#1C1C1C] text-gray-300"
                 }`}
                 onClick={() => setCurrentStep(1)}
               >
@@ -112,8 +172,8 @@ const GetAQuote = () => {
               <button
                 className={`px-3 py-1.5 text-sm rounded ${
                   currentStep === 2
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300"
+                    ? "dark:bg-[#244389] text-white"
+                    : "dark:bg-[#1C1C1C] text-gray-300"
                 }`}
                 onClick={() => setCurrentStep(2)}
                 disabled={currentStep < 2}
@@ -123,8 +183,8 @@ const GetAQuote = () => {
               <button
                 className={`px-3 py-1.5 text-sm rounded ${
                   currentStep === 3
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300"
+                    ? "dark:bg-[#244389] text-white"
+                    : "dark:bg-[#1C1C1C] text-gray-300"
                 }`}
                 onClick={() => setCurrentStep(3)}
                 disabled={currentStep < 3}
@@ -143,17 +203,17 @@ const GetAQuote = () => {
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <label
-                    className={`flex items-center justify-center px-4 py-2 border border-gray-600 text-white rounded cursor-pointer ${
-                      formData.projectType === "chat-ai"
-                        ? "bg-blue-600"
-                        : "bg-gray-700 hover:bg-gray-600"
+                    className={`flex items-center justify-center px-4 py-2  text-white rounded cursor-pointer ${
+                      formData.projectType === "Chat AI"
+                        ? "bg-gray-700"
+                        : "border border-[#2563EB66]"
                     }`}
                   >
                     <input
                       type="radio"
                       name="projectType"
-                      value="chat-ai"
-                      checked={formData.projectType === "chat-ai"}
+                      value="Chat AI"
+                      checked={formData.projectType === "Chat AI"}
                       onChange={(e) =>
                         handleInputChange("projectType", e.target.value)
                       }
@@ -162,17 +222,17 @@ const GetAQuote = () => {
                     Chat AI
                   </label>
                   <label
-                    className={`flex items-center justify-center px-4 py-2 border border-gray-600 text-white rounded cursor-pointer ${
-                      formData.projectType === "voice-ai"
-                        ? "bg-blue-600"
-                        : "bg-gray-700 hover:bg-gray-600"
+                    className={`flex items-center justify-center px-4 py-2 text-white rounded cursor-pointer ${
+                      formData.projectType === "Voice AI"
+                        ? "bg-gray-700"
+                        : "border border-[#2563EB66] "
                     }`}
                   >
                     <input
                       type="radio"
                       name="projectType"
-                      value="voice-ai"
-                      checked={formData.projectType === "voice-ai"}
+                      value="Voice AI"
+                      checked={formData.projectType === "Voice AI"}
                       onChange={(e) =>
                         handleInputChange("projectType", e.target.value)
                       }
@@ -181,17 +241,17 @@ const GetAQuote = () => {
                     Voice AI
                   </label>
                   <label
-                    className={`flex items-center justify-center px-4 py-2 border border-gray-600 text-white rounded cursor-pointer ${
-                      formData.projectType === "voice-chat-ai"
-                        ? "bg-blue-600"
-                        : "bg-gray-700 hover:bg-gray-600"
+                    className={`flex items-center justify-center px-4 py-2 text-white rounded cursor-pointer ${
+                      formData.projectType === "Both AI"
+                        ? "bg-gray-700"
+                        : "border border-[#2563EB66]"
                     }`}
                   >
                     <input
                       type="radio"
                       name="projectType"
-                      value="voice-chat-ai"
-                      checked={formData.projectType === "voice-chat-ai"}
+                      value="Both AI"
+                      checked={formData.projectType === "Both AI"}
                       onChange={(e) =>
                         handleInputChange("projectType", e.target.value)
                       }
@@ -212,7 +272,7 @@ const GetAQuote = () => {
                   onChange={(e) =>
                     handleInputChange("additionalInfo", e.target.value)
                   }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px] resize-none"
+                  className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[150px] resize-none"
                   placeholder="Tell us more about your project..."
                 />
               </div>
@@ -228,7 +288,7 @@ const GetAQuote = () => {
                 </label>
                 <div className="relative">
                   <select
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    className="bg-[#222222] w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
                     onChange={(e) =>
                       handleInputChange("budgetRange", e.target.value)
                     }
@@ -265,7 +325,7 @@ const GetAQuote = () => {
                 </label>
                 <div className="relative">
                   <select
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    className="w-full bg-[#222222] px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
                     onChange={(e) =>
                       handleInputChange("timeline", e.target.value)
                     }
@@ -312,7 +372,7 @@ const GetAQuote = () => {
                     onChange={(e) =>
                       handleInputChange("fullName", e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2  border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -327,7 +387,7 @@ const GetAQuote = () => {
                     onChange={(e) =>
                       handleInputChange("phoneNumber", e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your phone number"
                   />
                 </div>
@@ -341,7 +401,7 @@ const GetAQuote = () => {
                     onChange={(e) =>
                       handleInputChange("address", e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your address"
                   />
                 </div>
@@ -358,7 +418,7 @@ const GetAQuote = () => {
                     onChange={(e) =>
                       handleInputChange("emailAddress", e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -372,7 +432,7 @@ const GetAQuote = () => {
                     onChange={(e) =>
                       handleInputChange("company", e.target.value)
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your company name"
                   />
                 </div>
@@ -382,30 +442,30 @@ const GetAQuote = () => {
 
           <div className="flex justify-between mt-8">
             {currentStep > 1 && (
-              <button
-                onClick={handleBack}
-                className="px-4 py-2 rounded bg-transparent border border-gray-600 text-gray-300 hover:bg-gray-700 transition-colors"
-              >
-                <ChevronLeft className="w-4 h-4 mr-1" />
-                Back
-              </button>
+              <div className="bg-[#1C1C1C]">
+                <button
+                  onClick={handleBack}
+                  className="px-4 py-2 w-[215px] rounded  border border-[#2563EB66] text-gray-300  transition-colors"
+                >
+                  Back
+                </button>
+              </div>
             )}
 
             <div className="ml-auto">
               {currentStep < 3 ? (
-                <BorderGradientButton
+                <button
                   onClick={handleNext}
-                  className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white transition-colors"
-                text="Next"
+                  className="px-4 py-2 w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
                 >
-                  {/* Next */}
-                </BorderGradientButton>
+                  Next
+                </button>
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+                  className="px-4 py-2 w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
                 >
-                  Submit
+                  {loading ? <Loader /> : "Submit"}
                 </button>
               )}
             </div>

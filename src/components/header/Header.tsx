@@ -16,8 +16,12 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleQuote = () => {
-    setShowForm(!showForm);
+  const handleQuoteOpen = () => {
+    setShowForm(true);
+  };
+
+  const handleQuoteClose = () => {
+    setShowForm(false);
   };
 
   return (
@@ -62,14 +66,14 @@ const Header = () => {
 
         {/* Get a Quote Form */}
         {showForm && (
-          <div className="">
-            <GetAQuote />
+          <div className="absolute bottom-full mb-[-580] w-full sm:w-auto">
+            <GetAQuote handleQuoteClose={handleQuoteClose} />
           </div>
         )}
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8 cursor-pointer">
-          <GradientButton className="rounded-[35px]" onClick={handleQuote}>
+          <GradientButton className="rounded-[35px]" onClick={handleQuoteOpen}>
             Get a Quote
           </GradientButton>
           <BorderGradientButton text="Book a Call" />

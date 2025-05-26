@@ -1,18 +1,76 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import Loader from "../common/Loader";
 export function Subscribe() {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false)
+  const endPoint =
+    "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/newsletter";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle subscription logic here
-    console.log("Subscribing email:", email);
+
+    try {
+      setLoading(true)
+      const response = await fetch(endPoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setStatus("succeeded");
+      } else {
+        setStatus("failed");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setStatus("failed");
+    } finally {
+      setLoading(false)
+    }
+
     // Reset form
     setEmail("");
   };
+
+  useEffect(() => {
+    console.log("see the status", status);
+    if (status === "failed") {
+      toast.error("Form submission failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: "error1",
+        className: "toast-position",
+      });
+    } else if (status === "succeeded") {
+      toast.success("Submited successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: "success1",
+        className: "toast-position",
+      });
+    }
+    setStatus("");
+  }, [status]); // Run effect on status or message change
 
   return (
     <div className="mx-4 sm:mx-0 ">
@@ -29,8 +87,8 @@ export function Subscribe() {
             </h2>
             <p className="text-[#DEE4EA]">
               At Universal Park, we share insights on state AI innovations
-              transforming web development, customer service, and HR recruitment.
-              Discover how AI works and matters!
+              transforming web development, customer service, and HR
+              recruitment. Discover how AI works and matters!
             </p>
           </div>
           <div className="space-y-4">
@@ -56,7 +114,7 @@ export function Subscribe() {
                 type="submit"
                 className="w-full mt-3 h-[43px] bg-gray-900 hover:bg-gray-800 text-[#969696] font-medium py-2 rounded-[7px]"
               >
-                Subscribe Now
+                {loading ?  <Loader  /> : "Subscribe Now"}
               </button>
             </form>
           </div>
