@@ -121,7 +121,7 @@ const Chatbot = () => {
     <div className="fixed bottom-6 right-6 z-50">
       {/* Chatbot Icon */}
       <button
-        onClick={toggleChat}
+        onClick={(e) => { toggleChat();  e.stopPropagation()}}
         className="bg-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-700 transition-all"
       >
         <Image
@@ -136,7 +136,7 @@ const Chatbot = () => {
       {isOpen && (
         <div
           ref={chatContainerRef}
-          className="absolute bottom-24 right-0 w-80 sm:w-96 h-[500px] bg-gray-900 rounded-lg shadow-xl flex flex-col overflow-hidden"
+          className="fixed  bottom-6 md:bottom-26 mt-8 right-0 w-80  h-[400px] md:h-[470px] bg-gray-900 rounded-lg shadow-xl flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="bg-gray-800 p-4 text-white font-medium flex items-center">

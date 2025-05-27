@@ -76,7 +76,7 @@ const Blog = () => {
           onShowBlogDetail={handleReadBlog}
           blogDetail={blogDetail}
           blogs={blogs}
-        />{" "}
+        />
       </div>
       {!blogDetail && (
         <div className="p-6 flex justify-center">

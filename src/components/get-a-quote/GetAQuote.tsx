@@ -34,7 +34,6 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
   });
 
   useEffect(() => {
-    console.log("see the status", status);
     if (status === "failed") {
       toast.error("Form submission failed", {
         position: "top-right",
@@ -61,8 +60,10 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
         toastId: "success1",
         className: "toast-position",
       });
+      handleQuoteClose(); // used to close the form after submit 
     }
     setStatus("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]); // Run effect on status or message change
 
   const handleInputChange = (field: keyof FormData, value: string) => {
@@ -72,7 +73,6 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
     }));
   };
 
-  console.log("see the formData", formData);
 
   const handleNext = () => {
     if (currentStep < 3) {
@@ -108,8 +108,6 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
       },
     };
 
-    console.log("Formatted Data:", formattedData);
-
     try {
       setLoading(true)
       const response = await axios.post(queotEndpoint, formattedData, {
@@ -129,38 +127,43 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
   };
 
   return (
-    <div className="min-h-screen flex items-start justify-start p-4 z-999">
+    <div className="min-h-screen flex items-start justify-start p-4 z-99999">
       <div className=" dark:bg-[#222222]  rounded-lg md:w-[750px] lg:w-[970px] w-full">
         <div className="p-6">
           <div className="mb-6">
-            <div className="flex justify-between items-center mb-7">
-              <h1 className="text-white text-lg text-left font-medium">
-                Let&apos;s Build Your AI Solution{" "}
-              </h1>
-              <button
-                onClick={handleQuoteClose}
-                className="text-gray-300 cursor-pointer hover:text-white focus:outline-none"
-                aria-label="Close form"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+            <div>
+              <div className="flex justify-between items-center mb-5">
+                <h1 className="text-white sm:text-lg text-sm text-left font-medium">
+                  Let&apos;s Build Your AI Solution{" "}
+                </h1>
+                <button
+                  onClick={handleQuoteClose}
+                  className="text-gray-300 cursor-pointer hover:text-white focus:outline-none"
+                  aria-label="Close form"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className="text-[#8C8C8C]">
+                <hr className="border-t border-[#8C8C8C] mb-5" />
+              </div>
             </div>
-            <div className="flex  gap-9 mb-6">
+            <div className="flex  sm:gap-9  gap-3 mb-6">
               <button
-                className={`px-3 py-1.5 text-sm rounded ${
+                className={`px-3 py-1.5 sm:text-sm text-[12px] rounded ${
                   currentStep === 1
                     ? "dark:bg-[#244389] text-white"
                     : "dark:bg-[#1C1C1C] text-gray-300"
@@ -170,7 +173,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                 Project Details
               </button>
               <button
-                className={`px-3 py-1.5 text-sm rounded ${
+                className={`px-3 py-1.5 sm:text-sm text-[12px] rounded ${
                   currentStep === 2
                     ? "dark:bg-[#244389] text-white"
                     : "dark:bg-[#1C1C1C] text-gray-300"
@@ -181,7 +184,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                 Timeline & Budget
               </button>
               <button
-                className={`px-3 py-1.5 text-sm rounded ${
+                className={`px-3 py-1.5 sm:text-sm text-[12px] rounded ${
                   currentStep === 3
                     ? "dark:bg-[#244389] text-white"
                     : "dark:bg-[#1C1C1C] text-gray-300"
@@ -198,12 +201,12 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
           {currentStep === 1 && (
             <div className="space-y-4">
               <div>
-                <label className="text-gray-300 text-sm block mb-2 text-left">
+                <label className="text-gray-300 sm:text-sm text-[12px] block mb-2 text-left">
                   Project Type
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <label
-                    className={`flex items-center justify-center px-4 py-2  text-white rounded cursor-pointer ${
+                    className={`flex items-center justify-center sm:text-sm text-[12px] px-4 py-2  text-white rounded cursor-pointer ${
                       formData.projectType === "Chat AI"
                         ? "bg-gray-700"
                         : "border border-[#2563EB66]"
@@ -217,12 +220,12 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                       onChange={(e) =>
                         handleInputChange("projectType", e.target.value)
                       }
-                      className="hidden"
+                      className="hidden "
                     />
                     Chat AI
                   </label>
                   <label
-                    className={`flex items-center justify-center px-4 py-2 text-white rounded cursor-pointer ${
+                    className={`flex items-center sm:text-sm text-[12px] justify-center px-4 py-2 text-white rounded cursor-pointer ${
                       formData.projectType === "Voice AI"
                         ? "bg-gray-700"
                         : "border border-[#2563EB66] "
@@ -241,7 +244,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     Voice AI
                   </label>
                   <label
-                    className={`flex items-center justify-center px-4 py-2 text-white rounded cursor-pointer ${
+                    className={`flex items-center sm:text-sm text-[12px] justify-center px-4 py-2 text-white rounded cursor-pointer ${
                       formData.projectType === "Both AI"
                         ? "bg-gray-700"
                         : "border border-[#2563EB66]"
@@ -445,7 +448,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
               <div className="bg-[#1C1C1C]">
                 <button
                   onClick={handleBack}
-                  className="px-4 py-2 w-[215px] rounded  border border-[#2563EB66] text-gray-300  transition-colors"
+                  className="px-4 py-2 sm:w-[215px] rounded  border border-[#2563EB66] text-gray-300  transition-colors"
                 >
                   Back
                 </button>
@@ -456,14 +459,14 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
               {currentStep < 3 ? (
                 <button
                   onClick={handleNext}
-                  className="px-4 py-2 w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
+                  className="px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
                 >
                   Next
                 </button>
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="px-4 py-2 w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
+                  className="px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
                 >
                   {loading ? <Loader /> : "Submit"}
                 </button>
