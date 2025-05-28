@@ -15,13 +15,15 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
       <div className="flex flex-col md:flex-row items-center px-4 md:px-6 py-4 w-full">
         {/* Logo */}
         <div className="flex items-center w-full md:w-auto">
-          <Image
-            src="/icons/logo.svg"
-            width={60}
-            height={60}
-            alt="logo"
-            className="order-1"
-          />
+          <Link href={"/"}>
+            <Image
+              src="/icons/logo.svg"
+              width={60}
+              height={60}
+              alt="logo"
+              className="order-1"
+            />
+          </Link>
 
           {/* Button for mobile screens (centered, appears after logo) */}
           <div className="md:hidden mt-[2px] order-2 mx-auto">
@@ -35,7 +37,7 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
             aria-label="Toggle navigation menu"
           >
             <svg
-              className="w-8 h-8"
+              className="w-8 h-8 lg:block stroke-[#18181B] dark:stroke-[#E4E4E7]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

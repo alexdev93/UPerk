@@ -128,7 +128,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
 
   return (
     <div className="min-h-screen flex items-start justify-start p-4 z-99999">
-      <div className=" dark:bg-[#222222]  rounded-lg md:w-[750px] lg:w-[970px] w-full">
+      <div className=" bg-[#222222]  rounded-lg md:w-[750px] lg:w-[970px] w-full">
         <div className="p-6">
           <div className="mb-6">
             <div>
