@@ -26,11 +26,11 @@ export function Footer() {
               </div>
             </div>
             {/* Solutions Column */}
-            <div className="sm:border-l sm:border-r mr-0 sm:mr-6 border-l-0 border-r-0  border-gray-200  dark:border-[black] sm:px-14 ">
+            <div className="lg:border-l lg:border-r mr-0 lg:mr-6 border-l-0 border-r-0  border-gray-200  dark:border-[black] lg:px-14 ">
               <h3 className="text-gray-800 font-semibold mb-4 dark:text-[#E8E9EA]">
                 Solutions
               </h3>
-              <ul className="space-y-2 font-extralight text-sm text-gray-600 dark:text-[#E8E9EA]">
+              <ul className="space-y-2 font-light  text-sm text-gray-600 dark:text-[#E8E9EA]">
                 <li>
                   <Link
                     href="#"
@@ -70,7 +70,7 @@ export function Footer() {
               <h3 className="text-gray-800 dark:text-[#E8E9EA]  mb-4 ">
                 Solutions
               </h3>
-              <ul className="space-y-2   font-extralight text-sm text-gray-600 dark:text-[#E8E9EA]">
+              <ul className="space-y-2  text-sm font-light  text-[#2B2B36] dark:text-[#E8E9EA]">
                 <li>12785 Research Blvd, Suite 125</li>
                 <li>Austin TX 78750</li>
                 <li className="pt-2">422 Longview St STE A,</li>
@@ -86,6 +86,15 @@ export function Footer() {
                 </li>
               </ul>
             </div>
+          </div>
+          <div className="mt-6 ">
+            <hr className="border-t dark:border-[black] border-white mb-5" />
+          </div>
+          <div className="dark:flex flex-col justify-center  items-center dark:text-[#959595] hidden  font-light">
+            <p>13785 Research Blvd, Suite 125 Austin, TX 78750</p>
+            <p>422 Langone St STE A, San Jose, CA 95113</p>
+            <p>+1 (650)256-7514</p>
+            <p>contact@universalperk.com</p>
           </div>
         </div>
       </footer>

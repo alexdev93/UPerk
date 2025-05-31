@@ -1,116 +1,106 @@
-'use client'
+"use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AIInsightCard from "../ai-insights-trends/AIInsightCard";
 import BlogBanner from "./BlogBanner";
 import { Footer } from "../footer/Fotter";
-import BlogDetail from "./BlogDetail";
+// import BlogDetail from "./BlogDetail";
 import Navebar from "../header/Navebar";
+import axios from "axios";
+import DynamicBlogDetail from "./DynamicBlogDetail";
+interface ArticleData {
+  content: string;
+  fetchedAt: string; // ISO string, e.g., "2025-05-24T19:33:37.636Z"
+  id: string; // UUID, e.g., "2c72e05a-8b59-4230-8269-4723022a3308"
+  link: string; // URL to the article
+  pubDate: string; // Publication date as string, e.g., "2019-01-20 07:16:34"
+  title: string; // Title of the article
+  username: string; // Author's username
+}
+
 const Blog = () => {
-const [blogDetail, setBlogDetail]  = useState(false)
+  const [blogDetail, setBlogDetail] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [blogs, setBlogs] = useState<ArticleData[]>([]);
+
+  console.log("see  the blog", blogs);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/blogs"
+      )
+      .then((response) => {
+        setBlogs(response.data.posts); // Assuming the API returns the blog data in posts
+      })
+      .catch((error) => {
+        console.error("Error fetching blogs:", error);
+      });
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-    const cardsData = [
-      {
-        imgUrl: "/images/insights/ai-assistant.svg",
-        buttonText: "Technology",
-        description:
-          "Learn about various AI assistants, including voice assistants, and their capabilities in enhancing personal and business productivity",
-        title: "What Is An AI Assistant? 12 Capabilities You Need To Know",
-      },
-      {
-        imgUrl: "/images/insights/all-tools.svg",
-        buttonText: "Social Media",
-        description:
-          "Discover the best AI tools for content creation in 2025, including voice and audio generation",
-        title: "Best AI Tools For Content Creation in 2025",
-      },
-      {
-        imgUrl: "/images/insights/voice-assistant.svg",
-        buttonText: "AI Assistant",
-        description:
-          "Explore how AI voice assistants are transforming customer experience, engagement, and service",
-        title: "AI Voice Assistants: Transforming Customer Experience",
-      },
-      {
-        imgUrl: "/images/insights/voice-ai-health.svg",
-        buttonText: "Healthcare",
-        description:
-          "Investigate how voice AI is being integrated into healthcare and its impact on data management",
-        title: "The Future Of Voice AI in Healthcare",
-      },
-      {
-        imgUrl: "/images/insights/ai-in-everyday-life.svg",
-        buttonText: "Everyday Life",
-        description:
-          "Discover AI's transformative role in everyday life and why its integration matters",
-        title: "AI In Everyday Life: Transformations You Didn't Notice",
-      },
-      {
-        imgUrl: "/images/insights/ai-ethics.svg",
-        buttonText: "AI Ethics",
-        description:
-          "Learn about balancing innovation and responsibility in AI development and deployment",
-        title: "AI Ethics: Balancing Innovation And Responsibility",
-      },
-      {
-        imgUrl: "/images/ai/ai-in-finance.svg",
-        buttonText: "Finance",
-        description:
-          "Understand how AI enhances decision-making and risk assessment in financial strategies",
-        title: "AI In Finance: Enhancing Decision Making",
-      },
-      {
-        imgUrl: "/images/insights/ai-powered-creativity.svg",
-        buttonText: "AI-Powered Creativity",
-        description:
-          "Explore how AI is influencing creative fields like art and music in the digital age",
-        title: "AI-Powered Creativity: Art And Music In The Digital Age",
-      },
-    ];
-  
-  
-  
-  const handlReadBlog = () => {
-    if (blogDetail) {
-      setBlogDetail(false)
-    } else {
-      setBlogDetail(true)
-    } 
 
+  const handleReadBlog = () => {
+    setBlogDetail(!blogDetail);
   };
-  console.log("see the blog detail", blogDetail)
-  
-    return (
-      <>
-        <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
-        <div className="mb-12">
-          <BlogBanner onShowBlogDetail={handlReadBlog} blogDetail={blogDetail} />
-        </div>
-        {!blogDetail && (
-          <div className="p-6 flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
-              {cardsData.slice(0, 8).map((card, index) => (
-                <AIInsightCard
-                  key={index}
-                  imgUrl={card.imgUrl}
-                  buttonText={card.buttonText}
-                  description={card.description}
-                  title={card.title}
-                />
-              ))}
-            </div>
+
+  // Extract first paragraph from content for AIInsightCard description
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const getFirstParagraph = (content: any) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
+    const firstParagraph = doc.querySelector("p");
+    return firstParagraph
+      ? firstParagraph.textContent?.substring(0, 143) + "..."
+      : "";
+  };
+
+  // Extract first image URL from content for AIInsightCard imgUrl
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const getFirstImage = (content: any) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
+    const firstImage = doc.querySelector("img");
+    return firstImage
+      ? firstImage.src
+      : "/images/insights/fallback-blog-image.svg"; // Fallback image if none found
+  };
+
+  return (
+    <>
+      <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
+      <div className="mb-12">
+        <BlogBanner
+          onShowBlogDetail={handleReadBlog}
+          blogDetail={blogDetail}
+          blogs={blogs}
+        />
+      </div>
+      {!blogDetail && (
+        <div className="p-6 flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
+            {blogs.slice(0, 8).map((blog) => (
+              <AIInsightCard
+                key={blog.id}
+                imgUrl={getFirstImage(blog.content)}
+                buttonText={`${blog.username}`}
+                description={getFirstParagraph(blog.content) || ""}
+                title={blog.title}
+              />
+            ))}
           </div>
-        )}
-        {blogDetail && <BlogDetail />}{" "}
-        <div className="mt-[120px] mb-[30px]">
-          <Footer />
         </div>
-      </>
-    );
+      )}
+      {blogDetail && (
+        <DynamicBlogDetail blogDetail={blogDetail} blog={blogs[0] || {}} />
+      )}
+      <div className="mt-[120px] mb-[30px]">
+        <Footer />
+      </div>
+    </>
+  );
 };
 
 export default Blog;
