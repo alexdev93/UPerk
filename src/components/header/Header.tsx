@@ -92,13 +92,6 @@ const Header = () => {
             automation that sounds human and works non-stop
           </Paragraph>
 
-          {/* Get a Quote Form */}
-          {showForm && (
-            <div>
-              <GetAQuote handleQuoteClose={handleQuoteClose} />
-            </div>
-          )}
-
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8 cursor-pointer">
             <GradientButton
@@ -115,6 +108,12 @@ const Header = () => {
           </div>
         </div>
       </div>
+      {/* Get a Quote Form */}
+      {showForm && (
+        <div>
+          <GetAQuote handleQuoteClose={handleQuoteClose} />
+        </div>
+      )}
     </>
   );
 };
