@@ -22,10 +22,10 @@ const Card = ({
   iconUrlDark,
 }: CardProps) => {
   return (
-    <div className="dark:bg-[#1e1e1e] bg-white text-white rounded-xl py-6 px-[13px] w-[260px] h-[205px] shadow-lg flex-shrink-0">
+    <div className="dark:bg-[#1e1e1e] bg-white text-white rounded-xl py-6 px-[13px] w-[280px] h-[250px] shadow-lg flex-shrink-0">
       <div className="flex items-center mb-4">
         {(iconUrlLight || iconUrlDark) && (
-          <>
+          <div className="">
             <Image
               src={iconUrlLight}
               alt="icon"
@@ -40,21 +40,21 @@ const Card = ({
               width={20}
               height={20}
             />
-          </>
+          </div>
         )}
         <div>
           <Heading
-            level={4}
-            className="dark:text-white text-[#272A2D] font-semibold text-sm"
+            level={5}
+            className="dark:text-white text-[#272A2D] font-semibold "
           >
             {title}
           </Heading>
-          <Paragraph className="text-[#272A2D] dark:text-[#A5A5A5] text-xs">
+          <Paragraph className="text-[#272A2D] dark:text-[#A5A5A5] text-[14px]">
             {subtitle}
           </Paragraph>
         </div>
       </div>
-      <Paragraph className="text-[#272A2D] dark:text-[#A5A5A5] text-sm mb-4">
+      <Paragraph className="text-[#272A2D] dark:text-[#A5A5A5] text-[16px] mb-4">
         {description}
       </Paragraph>
       <a
@@ -129,7 +129,7 @@ export default function AICapabilitiesForBusiness() {
   ];
 
   return (
-    <div className="relative xl:h-[900px] mt-50 h-[700px]">
+    <div className="relative xl:h-[960px] mt-50 h-[700px]">
       {/* Inclined Background with Reduced Skew */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 transform -skew-y-6 origin-top-left z-0 top-0"></div>
 

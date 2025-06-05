@@ -16,16 +16,17 @@ interface FormData {
   address: string;
 }
 
-const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
+const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false)
-  
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+
   const [formData, setFormData] = useState<FormData>({
     projectType: "",
     additionalInfo: "",
-    budgetRange: "5000-10000",
-    timeline: "1-3 month",
+    budgetRange: "",
+    timeline: "",
     fullName: "",
     emailAddress: "",
     phoneNumber: "",
@@ -60,22 +61,67 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
         toastId: "success1",
         className: "toast-position",
       });
-      handleQuoteClose(); // used to close the form after submit 
+      handleQuoteClose();
     }
     setStatus("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]); // Run effect on status or message change
+  }, [status]);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
+    // Clear error for the field when user starts typing
+    setErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
   };
 
+  const validateStep = () => {
+    const newErrors: Partial<FormData> = {};
+
+    if (currentStep === 1) {
+      if (!formData.projectType) {
+        newErrors.projectType = "Project Type is required";
+      }
+      if (!formData.additionalInfo) {
+        newErrors.additionalInfo = "Project Description is required";
+      }
+    } else if (currentStep === 2) {
+      if (!formData.budgetRange) {
+        newErrors.budgetRange = "Budget Range is required";
+      }
+      if (!formData.timeline) {
+        newErrors.timeline = "Timeline is required";
+      }
+    } else if (currentStep === 3) {
+      if (!formData.fullName) {
+        newErrors.fullName = "Full Name is required";
+      }
+      if (!formData.emailAddress) {
+        newErrors.emailAddress = "Email Address is required";
+      } else if (!/\S+@\S+\.\S+/.test(formData.emailAddress)) {
+        newErrors.emailAddress = "Invalid email format";
+      }
+      if (!formData.phoneNumber) {
+        newErrors.phoneNumber = "Phone Number is required";
+      }
+      if (!formData.company) {
+        newErrors.company = "Company is required";
+      }
+      if (!formData.address) {
+        newErrors.address = "Address is required";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleNext = () => {
-    if (currentStep < 3) {
+    if (validateStep() && currentStep < 3) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -90,51 +136,52 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
     "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/form/submit-form";
 
   const handleSubmit = async () => {
-    const formattedData = {
-      projectDetails: {
-        projectType: formData.projectType,
-        projectDescription: formData.additionalInfo,
-      },
-      timelineAndBudget: {
-        budgetRange: formData.budgetRange,
-        timeline: formData.timeline,
-      },
-      contactInfo: {
-        fullName: formData.fullName,
-        email: formData.emailAddress,
-        address: formData.address,
-        phoneNumber: formData.phoneNumber,
-        company: formData.company,
-      },
-    };
-
-    try {
-      setLoading(true)
-      const response = await axios.post(queotEndpoint, formattedData, {
-        headers: {
-          "Content-Type": "application/json",
+    if (validateStep()) {
+      const formattedData = {
+        projectDetails: {
+          projectType: formData.projectType,
+          projectDescription: formData.additionalInfo,
         },
-      });
-      setStatus("succeeded");
-      console.log("Success:", response.data);
-    } catch (error) {
-      setStatus("failed");
+        timelineAndBudget: {
+          budgetRange: formData.budgetRange,
+          timeline: formData.timeline,
+        },
+        contactInfo: {
+          fullName: formData.fullName,
+          email: formData.emailAddress,
+          address: formData.address,
+          phoneNumber: formData.phoneNumber,
+          company: formData.company,
+        },
+      };
 
-      console.error("Error submitting form:", error);
-    } finally {
-      setLoading(false)
+      try {
+        setLoading(true);
+        const response = await axios.post(queotEndpoint, formattedData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setStatus("succeeded");
+        console.log("Success:", response.data);
+      } catch (error) {
+        setStatus("failed");
+        console.error("Error submitting form:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-start justify-start p-4 z-99999">
+    <div className="min-h-screen flex mx-auto max-w-[1000px] items-start justify-start p-4 z-99999">
       <div className=" bg-[#222222]  rounded-lg md:w-[750px] lg:w-[970px] w-full">
         <div className="p-6">
           <div className="mb-6">
             <div>
               <div className="flex justify-between items-center mb-5">
                 <h1 className="text-white sm:text-lg text-sm text-left font-medium">
-                  Let&apos;s Build Your AI Solution{" "}
+                  Let&apos;s Build Your AI Solution
                 </h1>
                 <button
                   onClick={handleQuoteClose}
@@ -263,6 +310,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     Voice and Chat AI
                   </label>
                 </div>
+                {errors.projectType && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.projectType}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -278,6 +330,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                   className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[150px] resize-none"
                   placeholder="Tell us more about your project..."
                 />
+                {errors.additionalInfo && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.additionalInfo}
+                  </p>
+                )}
               </div>
             </div>
           )}
@@ -291,6 +348,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                 </label>
                 <div className="relative">
                   <select
+                    value={formData.budgetRange}
                     className="bg-[#222222] w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
                     onChange={(e) =>
                       handleInputChange("budgetRange", e.target.value)
@@ -320,6 +378,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     </svg>
                   </div>
                 </div>
+                {errors.budgetRange && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.budgetRange}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -328,6 +391,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                 </label>
                 <div className="relative">
                   <select
+                    value={formData.timeline}
                     className="w-full bg-[#222222] px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
                     onChange={(e) =>
                       handleInputChange("timeline", e.target.value)
@@ -357,6 +421,9 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     </svg>
                   </div>
                 </div>
+                {errors.timeline && (
+                  <p className="text-red-500 text-xs mt-1">{errors.timeline}</p>
+                )}
               </div>
             </div>
           )}
@@ -378,6 +445,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     className="w-full px-3 py-2  border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your full name"
                   />
+                  {errors.fullName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.fullName}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="text-gray-300 text-sm block mb-2 text-left">
@@ -393,6 +465,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your phone number"
                   />
+                  {errors.phoneNumber && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.phoneNumber}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="text-gray-300 text-sm block mb-2 text-left">
@@ -407,6 +484,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your address"
                   />
+                  {errors.address && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.address}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="space-y-4">
@@ -424,6 +506,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your email"
                   />
+                  {errors.emailAddress && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.emailAddress}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="text-gray-300 text-sm block mb-2 text-left">
@@ -438,6 +525,11 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
                     className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your company name"
                   />
+                  {errors.company && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.company}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -459,14 +551,42 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose : () => void}) => {
               {currentStep < 3 ? (
                 <button
                   onClick={handleNext}
-                  className="px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
+                  disabled={
+                    (currentStep === 1 &&
+                      (!formData.projectType || !formData.additionalInfo)) ||
+                    (currentStep === 2 &&
+                      (!formData.budgetRange || !formData.timeline))
+                  }
+                  className={`px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors ${
+                    (currentStep === 1 &&
+                      (!formData.projectType || !formData.additionalInfo)) ||
+                    (currentStep === 2 &&
+                      (!formData.budgetRange || !formData.timeline))
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   Next
                 </button>
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors"
+                  disabled={
+                    !formData.fullName ||
+                    !formData.emailAddress ||
+                    !formData.phoneNumber ||
+                    !formData.company ||
+                    !formData.address
+                  }
+                  className={`px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors ${
+                    !formData.fullName ||
+                    !formData.emailAddress ||
+                    !formData.phoneNumber ||
+                    !formData.company ||
+                    !formData.address
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   {loading ? <Loader /> : "Submit"}
                 </button>

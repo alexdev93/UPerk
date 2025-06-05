@@ -8,6 +8,7 @@ import { Footer } from "../footer/Fotter";
 import Navebar from "../header/Navebar";
 import axios from "axios";
 import DynamicBlogDetail from "./DynamicBlogDetail";
+import PreLoader from "../common/PreLoader";
 interface ArticleData {
   content: string;
   fetchedAt: string; // ISO string, e.g., "2025-05-24T19:33:37.636Z"
@@ -22,6 +23,7 @@ const Blog = () => {
   const [blogDetail, setBlogDetail] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [blogs, setBlogs] = useState<ArticleData[]>([]);
+  const [error, setError] = useState("");
 
   console.log("see  the blog", blogs);
 
@@ -34,6 +36,7 @@ const Blog = () => {
         setBlogs(response.data.posts); // Assuming the API returns the blog data in posts
       })
       .catch((error) => {
+        setError("error");
         console.error("Error fetching blogs:", error);
       });
   }, []);
@@ -71,34 +74,59 @@ const Blog = () => {
   return (
     <>
       <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
-      <div className="mb-12">
-        <BlogBanner
-          onShowBlogDetail={handleReadBlog}
-          blogDetail={blogDetail}
-          blogs={blogs}
-        />
-      </div>
-      {!blogDetail && (
-        <div className="p-6 flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
-            {blogs.slice(0, 8).map((blog) => (
-              <AIInsightCard
-                key={blog.id}
-                imgUrl={getFirstImage(blog.content)}
-                buttonText={`${blog.username}`}
-                description={getFirstParagraph(blog.content) || ""}
-                title={blog.title}
-              />
-            ))}
+
+      {blogs.length === 0 ? (
+        <div className="mt-50">
+          <PreLoader />
+        </div>
+      ) : error ? (
+        <div
+          className={`flex flex-col justify-center items-center min-h-[30vh] mx-auto mt-4 w-full
+           text-primary rounded-lg py-4`}
+        >
+          <div className=" text-red-800 rounded-xl p-4 " >
+            <h4
+              className="font-bold text-center text-primary mb-0"
+              style={{
+                fontSize: "1rem",
+              }}
+            >
+              Oops! Something went wrong while loading the blogs
+            </h4>
           </div>
         </div>
+      ) : (
+        <>
+          <div className="mb-12">
+            <BlogBanner
+              onShowBlogDetail={handleReadBlog}
+              blogDetail={blogDetail}
+              blogs={blogs}
+            />
+          </div>
+          {!blogDetail && (
+            <div className="p-6 flex justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
+                {blogs.slice(0, 8).map((blog) => (
+                  <AIInsightCard
+                    key={blog.id}
+                    imgUrl={getFirstImage(blog.content)}
+                    buttonText={`${blog.username}`}
+                    description={getFirstParagraph(blog.content) || ""}
+                    title={blog.title}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          {blogDetail && (
+            <DynamicBlogDetail blogDetail={blogDetail} blog={blogs[0] || {}} />
+          )}
+          <div className="mt-[120px] mb-[30px]">
+            <Footer />
+          </div>
+        </>
       )}
-      {blogDetail && (
-        <DynamicBlogDetail blogDetail={blogDetail} blog={blogs[0] || {}} />
-      )}
-      <div className="mt-[120px] mb-[30px]">
-        <Footer />
-      </div>
     </>
   );
 };

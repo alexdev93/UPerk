@@ -5,7 +5,7 @@ const page = () => {
     <div>
       <CaseStudies />
     </div>
-  );
-};
+  )
+}
 
 export default page;

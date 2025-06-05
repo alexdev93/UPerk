@@ -8,10 +8,13 @@ import { Paragraph } from "../common/Paragraph";
 import Navebar from "./Navebar";
 import GetAQuote from "../get-a-quote/GetAQuote";
 import CalendlyEmbed from "./CalendlyEmbed";
+// import VoiceAi from "@/components/header/VoiceAI";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
+  // const [isRecording, setIsRecording] = useState(false)
 
   const handleBookaCall = () => {
     if (showCalendly) {
@@ -60,9 +63,18 @@ const Header = () => {
             alt="hero"
             className="mb-4"
           />
+
           <Paragraph className="text-sm dark:text-[#E8E9EA] text-[#272A2D] mt-8 mb-6">
             Powered by Universal Perk
           </Paragraph>
+          {/* below is voice Ai */}
+          {/* <div className="">
+            <VoiceAi
+              setIsRecording={setIsRecording}
+              isRecording={isRecording}
+            />
+          </div> */}
+
           {/* Title */}
           <Heading level={1}>
             <div className="sm:mb-[-30px] dark:text-[#EAEAEA] text-[#272A2D]">
@@ -80,13 +92,6 @@ const Header = () => {
             automation that sounds human and works non-stop
           </Paragraph>
 
-          {/* Get a Quote Form */}
-          {showForm && (
-            <div className="absolute bottom-full mb-[-580] w-full sm:w-auto">
-              <GetAQuote handleQuoteClose={handleQuoteClose} />
-            </div>
-          )}
-
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8 cursor-pointer">
             <GradientButton
@@ -103,6 +108,12 @@ const Header = () => {
           </div>
         </div>
       </div>
+      {/* Get a Quote Form */}
+      {showForm && (
+        <div>
+          <GetAQuote handleQuoteClose={handleQuoteClose} />
+        </div>
+      )}
     </>
   );
 };

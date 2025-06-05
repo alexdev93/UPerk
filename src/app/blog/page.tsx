@@ -1,9 +1,7 @@
 'use client'
 import dynamic from "next/dynamic";
-
 // Dynamically import the Blog component
 const Blog = dynamic(() => import("@/components/blog"), {
-  loading: () => <div>Loading...</div>, // Optional: Fallback UI while loading
   ssr: false, // Optional: Disable server-side rendering if needed
 });
 
