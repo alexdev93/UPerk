@@ -42,8 +42,8 @@ const AIInsightsTrends = () => {
           paragraph="Uncover inspiring success stories of startups that have leveraged our innovative AI solutions to tackle challenges, accelerate growth, and enhance performance."
         />
       </div>
-      <div className="overflow-x-auto snap-x snap-mandatory scroll-px-6 p-6">
-        <div className="flex gap-6 pl-6 pr-6">
+      <div className="overflow-x-auto   snap-x snap-mandatory scroll-px-6 p-6">
+        <div className="flex gap-6 pl-6 pr-6 justify-center">
           {cardsData.map((card, index) => (
             <AIInsightCard
               key={index}

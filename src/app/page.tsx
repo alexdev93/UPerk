@@ -10,6 +10,7 @@ import DevelopmentPipeline from "@/components/development-pipline";
 import { Footer } from "@/components/footer/Fotter";
 import ProjectPlanningSteps from "@/components/MVP-for-startup";
 import Chatbot from "@/components/chatbot/Chatbot";
+import CaseStudy from "@/components/case-studies-section";
 export default function Home() {
   return (
     <div className="mb-[30px]">
@@ -25,6 +26,7 @@ export default function Home() {
       <AICapabilitiesForBUsiness />
       <DevelopmentPipeline />
       <TransformedBusiness />
+      < CaseStudy />
       <AIInsightsTrends />
       <TechStackSection />
       <Subscrib />

@@ -17,7 +17,7 @@ const CaseStudies = () => {
       <Heading level={2} className="text-center mt-14">
         case-study page
       </Heading>
-      ;
+      
     </div>
   );
 }

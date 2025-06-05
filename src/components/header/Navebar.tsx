@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import BorderGradientButton from '../common/BorderGradientButton';
+import GetAQuote from '../get-a-quote/GetAQuote';
 
 interface NavBarProps {
   toggleMenu: () => void;
@@ -9,6 +10,15 @@ interface NavBarProps {
 } 
 
 const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
+    const [showForm, setShowForm] = useState(false);
+    const handleQuoteClose = () => {
+      setShowForm(false);
+    };
+  
+    const handleQuoteOpen = () => {
+      setShowForm(true);
+    };
+  
   return (
     <>
       {/* Top Bar */}
@@ -26,7 +36,10 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
           </Link>
 
           {/* Button for mobile screens (centered, appears after logo) */}
-          <div className="md:hidden mt-[2px] order-2 mx-auto">
+          <div
+            className="md:hidden mt-[2px] order-2 mx-auto"
+            onClick={handleQuoteOpen}
+          >
             <BorderGradientButton text="Build Your AI Agent" />
           </div>
 
@@ -82,7 +95,7 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
           </div>
 
           {/* Button for >=md screens (appears after navigation links) */}
-          <div className="mt-[2px]">
+          <div className="mt-[2px]" onClick={handleQuoteOpen}>
             <BorderGradientButton text="Build Your AI Agent" />
           </div>
         </div>
@@ -110,6 +123,12 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
           </Link>
         </div>
       </div>
+      {/* Get a Quote Form */}
+      {showForm && (
+        <div>
+          <GetAQuote handleQuoteClose={handleQuoteClose} />
+        </div>
+      )}
     </>
   );
 };
