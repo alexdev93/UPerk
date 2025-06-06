@@ -61,7 +61,7 @@ const Card = ({
         href="#"
         className="dark:text-[#2563EB] text-[#2563EB]  text-sm underline font-medium hover:underline"
       >
-        Show More
+        Get Started
       </a>
     </div>
   );

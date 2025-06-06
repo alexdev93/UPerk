@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import BorderGradientButton from '../common/BorderGradientButton';
 import GetAQuote from '../get-a-quote/GetAQuote';
+import Overlay from '../common/Overlay';
 
 interface NavBarProps {
   toggleMenu: () => void;
@@ -126,7 +127,9 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
       {/* Get a Quote Form */}
       {showForm && (
         <div>
-          <GetAQuote handleQuoteClose={handleQuoteClose} />
+          <Overlay>
+            <GetAQuote handleQuoteClose={handleQuoteClose} />
+          </Overlay>
         </div>
       )}
     </>

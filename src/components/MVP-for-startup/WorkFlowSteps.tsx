@@ -5,6 +5,7 @@ import { Heading } from "../common/Heading";
 import { Paragraph } from "../common/Paragraph";
 import { useState } from "react";
 import GetAQuote from "../get-a-quote/GetAQuote";
+import Overlay from "../common/Overlay";
 //steps
 
 const steps = [
@@ -143,7 +144,10 @@ const line = (
                     {/* ODD Steps: Card on Top */}
                     {isOdd && (
                       <div className="mb-0 bg-gradient-to-br from-[#F6F6F6] to-[#FAFAFA] dark:bg-gradient-to-br dark:from-[#232323] dark:to-[#292929] p-5  rounded-lg min-h-[200px] w-full text-left">
-                        <Heading level={4} className="font-medium  mb-1.5 text-[#272A2D] dark:text-[#E8E9EA]">
+                        <Heading
+                          level={4}
+                          className="font-medium  mb-1.5 text-[#272A2D] dark:text-[#E8E9EA]"
+                        >
                           {step.title}
                         </Heading>
                         <p className="text-[16px] leading-relaxed text-zinc-400">
@@ -186,7 +190,10 @@ const line = (
                     {/* EVEN Steps: Card on Bottom */}
                     {!isOdd && (
                       <div className="mt-0 bg-gradient-to-br from-[#F6F6F6] to-[#FAFAFA] dark:bg-gradient-to-br dark:from-[#232323] dark:to-[#292929] p-5 rounded-lg min-h-[200px] w-full text-left">
-                        <Heading level={4} className="font-medium  mb-1.5 text-[#272A2D] dark:text-[#E8E9EA]">
+                        <Heading
+                          level={4}
+                          className="font-medium  mb-1.5 text-[#272A2D] dark:text-[#E8E9EA]"
+                        >
                           {step.title}
                         </Heading>
                         <p className="text-[16px] leading-relaxed text-zinc-400">
@@ -224,7 +231,9 @@ const line = (
       {/* Get a Quote Form */}
       {showForm && (
         <div>
-          <GetAQuote handleQuoteClose={handleQuoteClose} />
+          <Overlay>
+            <GetAQuote handleQuoteClose={handleQuoteClose} />
+          </Overlay>
         </div>
       )}
     </>

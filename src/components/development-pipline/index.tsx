@@ -5,6 +5,7 @@ import GradientButton from "../common/BgGradientButton";
 import Banner from "../common/Banner";
 import { useState } from "react";
 import GetAQuote from "../get-a-quote/GetAQuote";
+import Overlay from "../common/Overlay";
 const DevelopmentPipeline = () => {
   // const line = (
   //   <svg
@@ -247,7 +248,9 @@ const DevelopmentPipeline = () => {
       {/* Get a Quote Form */}
       {showForm && (
         <div>
-          <GetAQuote handleQuoteClose={handleQuoteClose} />
+          <Overlay>
+            <GetAQuote handleQuoteClose={handleQuoteClose} />
+          </Overlay>
         </div>
       )}
     </>
