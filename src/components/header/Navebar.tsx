@@ -130,6 +130,7 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
           <Overlay>
             <GetAQuote handleQuoteClose={handleQuoteClose} />
           </Overlay>
+
         </div>
       )}
     </>

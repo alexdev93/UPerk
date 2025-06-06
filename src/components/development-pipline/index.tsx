@@ -6,6 +6,7 @@ import Banner from "../common/Banner";
 import { useState } from "react";
 import GetAQuote from "../get-a-quote/GetAQuote";
 import Overlay from "../common/Overlay";
+
 const DevelopmentPipeline = () => {
   // const line = (
   //   <svg
@@ -251,6 +252,7 @@ const DevelopmentPipeline = () => {
           <Overlay>
             <GetAQuote handleQuoteClose={handleQuoteClose} />
           </Overlay>
+
         </div>
       )}
     </>

@@ -6,6 +6,7 @@ import { Paragraph } from "../common/Paragraph";
 import { useState } from "react";
 import GetAQuote from "../get-a-quote/GetAQuote";
 import Overlay from "../common/Overlay";
+
 //steps
 
 const steps = [
@@ -148,6 +149,7 @@ const line = (
                           level={4}
                           className="font-medium  mb-1.5 text-[#272A2D] dark:text-[#E8E9EA]"
                         >
+
                           {step.title}
                         </Heading>
                         <p className="text-[16px] leading-relaxed text-zinc-400">
@@ -194,6 +196,7 @@ const line = (
                           level={4}
                           className="font-medium  mb-1.5 text-[#272A2D] dark:text-[#E8E9EA]"
                         >
+
                           {step.title}
                         </Heading>
                         <p className="text-[16px] leading-relaxed text-zinc-400">
@@ -234,6 +237,7 @@ const line = (
           <Overlay>
             <GetAQuote handleQuoteClose={handleQuoteClose} />
           </Overlay>
+
         </div>
       )}
     </>

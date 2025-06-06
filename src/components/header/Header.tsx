@@ -9,7 +9,9 @@ import Navebar from "./Navebar";
 import GetAQuote from "../get-a-quote/GetAQuote";
 import CalendlyEmbed from "./CalendlyEmbed";
 // import VoiceAi from "@/components/header/VoiceAI";
+
 import Overlay from "../common/Overlay";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -115,6 +117,7 @@ const Header = () => {
           <Overlay>
             <GetAQuote handleQuoteClose={handleQuoteClose} />
           </Overlay>
+
         </div>
       )}
     </>
