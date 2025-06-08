@@ -23,7 +23,7 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
   return (
     <>
       {/* Top Bar */}
-      <div className="flex flex-col md:flex-row items-center px-4 md:px-6 py-4 w-full">
+      <div className="flex max-w-[1500px] mx-auto flex-col md:flex-row items-center px-4 md:px-6 py-4 w-full">
         {/* Logo */}
         <div className="flex items-center w-full md:w-auto">
           <Link href={"/"}>

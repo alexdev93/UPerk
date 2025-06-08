@@ -63,13 +63,15 @@ const CaseStudiesOfSuccess = () => {
             }`}
           >
             <h2
-              className={`  dark:text-[#FFFFFF]  font-bold ${
+              className={`  dark:text-[#FFFFFF] text-[#272A2D]  font-bold ${
                 index === 0 ? "text-3xl" : "text-2xl"
               }`}
             >
               {study.title}
             </h2>
-            <p className="dark:text-[#A1A1A1]">{study.paragraph}</p>
+            <p className="dark:text-[#A1A1A1] text-[#272A2D]">
+              {study.paragraph}
+            </p>
 
             <BorderGradientButton text="Read More" />
           </div>
