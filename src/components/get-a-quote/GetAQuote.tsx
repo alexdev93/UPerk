@@ -175,17 +175,17 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
 
   return (
     <div className="min-h-screen flex mx-auto max-w-[1000px] items-start justify-start p-4 z-99999">
-      <div className=" bg-[#222222]  rounded-lg md:w-[750px] lg:w-[970px] w-full">
+      <div className="dark:bg-[#222222] bg-[#F8F8F8] rounded-lg md:w-[750px] lg:w-[970px] w-full">
         <div className="p-6">
           <div className="mb-6">
             <div>
               <div className="flex justify-between items-center mb-5">
-                <h1 className="text-white sm:text-lg text-sm text-left font-medium">
+                <h1 className="dark:text-gray-300 text-[#272A2D] sm:text-lg text-sm text-left font-medium">
                   Let&apos;s Build Your AI Solution
                 </h1>
                 <button
                   onClick={handleQuoteClose}
-                  className="text-gray-300 cursor-pointer hover:text-white focus:outline-none"
+                  className="dark:text-gray-300 text-[#272A2D] cursor-pointer hover:dark:text-white hover:text-[#1C2526] focus:outline-none"
                   aria-label="Close form"
                 >
                   <svg
@@ -208,12 +208,12 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                 <hr className="border-t border-[#8C8C8C] mb-5" />
               </div>
             </div>
-            <div className="flex  sm:gap-9  gap-3 mb-6">
+            <div className="flex sm:gap-9 gap-3 mb-6">
               <button
                 className={`px-3 py-1.5 sm:text-sm text-[12px] rounded ${
                   currentStep === 1
-                    ? "dark:bg-[#244389] text-white"
-                    : "dark:bg-[#1C1C1C] text-gray-300"
+                    ? "dark:bg-[#244389] dark:text-white text-[#272A2D]"
+                    : "dark:bg-[#1C1C1C] dark:text-gray-300 text-[#272A2D]"
                 }`}
                 onClick={() => setCurrentStep(1)}
               >
@@ -222,8 +222,8 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
               <button
                 className={`px-3 py-1.5 sm:text-sm text-[12px] rounded ${
                   currentStep === 2
-                    ? "dark:bg-[#244389] text-white"
-                    : "dark:bg-[#1C1C1C] text-gray-300"
+                    ? "dark:bg-[#244389] dark:text-white text-[#272A2D]"
+                    : "dark:bg-[#1C1C1C] dark:text-gray-300 text-[#272A2D]"
                 }`}
                 onClick={() => setCurrentStep(2)}
                 disabled={currentStep < 2}
@@ -233,8 +233,8 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
               <button
                 className={`px-3 py-1.5 sm:text-sm text-[12px] rounded ${
                   currentStep === 3
-                    ? "dark:bg-[#244389] text-white"
-                    : "dark:bg-[#1C1C1C] text-gray-300"
+                    ? "dark:bg-[#244389] dark:text-white text-[#272A2D]"
+                    : "dark:bg-[#1C1C1C] dark:text-gray-300 text-[#272A2D]"
                 }`}
                 onClick={() => setCurrentStep(3)}
                 disabled={currentStep < 3}
@@ -248,14 +248,14 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
           {currentStep === 1 && (
             <div className="space-y-4">
               <div>
-                <label className="text-gray-300 sm:text-sm text-[12px] block mb-2 text-left">
+                <label className="dark:text-gray-300 text-[#272A2D] sm:text-sm text-[12px] block mb-2 text-left">
                   Project Type
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <label
-                    className={`flex items-center justify-center sm:text-sm text-[12px] px-4 py-2  text-white rounded cursor-pointer ${
+                    className={`flex items-center justify-center sm:text-sm text-[12px] px-4 py-2 dark:text-gray-300 text-[#272A2D] rounded cursor-pointer ${
                       formData.projectType === "Chat AI"
-                        ? "bg-gray-700"
+                        ? "dark:bg-gray-700  bg-blue-100"
                         : "border border-[#2563EB66]"
                     }`}
                   >
@@ -267,15 +267,15 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                       onChange={(e) =>
                         handleInputChange("projectType", e.target.value)
                       }
-                      className="hidden "
+                      className="hidden"
                     />
                     Chat AI
                   </label>
                   <label
-                    className={`flex items-center sm:text-sm text-[12px] justify-center px-4 py-2 text-white rounded cursor-pointer ${
+                    className={`flex items-center sm:text-sm text-[12px] justify-center px-4 py-2 dark:text-gray-300 text-[#272A2D] rounded cursor-pointer ${
                       formData.projectType === "Voice AI"
-                        ? "bg-gray-700"
-                        : "border border-[#2563EB66] "
+                        ? "dark:bg-gray-700 bg-blue-100"
+                        : "border border-[#2563EB66]"
                     }`}
                   >
                     <input
@@ -291,9 +291,9 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     Voice AI
                   </label>
                   <label
-                    className={`flex items-center sm:text-sm text-[12px] justify-center px-4 py-2 text-white rounded cursor-pointer ${
+                    className={`flex items-center sm:text-sm text-[12px] justify-center px-4 py-2 dark:text-gray-300 text-[#272A2D] rounded cursor-pointer ${
                       formData.projectType === "Both AI"
-                        ? "bg-gray-700"
+                        ? "dark:bg-gray-700 bg-blue-100"
                         : "border border-[#2563EB66]"
                     }`}
                   >
@@ -318,7 +318,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
               </div>
 
               <div>
-                <label className="text-gray-300 text-sm block mb-2 text-left">
+                <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                   Project Description
                 </label>
                 <textarea
@@ -327,7 +327,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                   onChange={(e) =>
                     handleInputChange("additionalInfo", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[150px] resize-none"
+                  className="w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[150px] resize-none dark:placeholder-gray-300 placeholder-[#272A2D]"
                   placeholder="Tell us more about your project..."
                 />
                 {errors.additionalInfo && (
@@ -343,13 +343,13 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
           {currentStep === 2 && (
             <div className="space-y-4">
               <div>
-                <label className="text-gray-300 text-sm block mb-2 text-left">
+                <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                   Budget Range ($)
                 </label>
                 <div className="relative">
                   <select
                     value={formData.budgetRange}
-                    className="bg-[#222222] w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    className=" dark:bg-[#222222] w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer dark:placeholder-gray-300 placeholder-[#272A2D]"
                     onChange={(e) =>
                       handleInputChange("budgetRange", e.target.value)
                     }
@@ -364,7 +364,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                     <svg
-                      className="w-4 h-4 text-gray-400"
+                      className="w-4 h-4 dark:text-gray-300 text-[#272A2D]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -386,13 +386,13 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
               </div>
 
               <div>
-                <label className="text-gray-300 text-sm block mb-2 text-left">
+                <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                   Timeline (Months)
                 </label>
                 <div className="relative">
                   <select
                     value={formData.timeline}
-                    className="w-full bg-[#222222] px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    className="w-full dark:bg-[#222222] px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer dark:placeholder-gray-300 placeholder-[#272A2D]"
                     onChange={(e) =>
                       handleInputChange("timeline", e.target.value)
                     }
@@ -407,7 +407,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                     <svg
-                      className="w-4 h-4 text-gray-400"
+                      className="w-4 h-4 dark:text-gray-300 text-[#272A2D]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -433,7 +433,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div>
-                  <label className="text-gray-300 text-sm block mb-2 text-left">
+                  <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                     Full Name
                   </label>
                   <input
@@ -442,7 +442,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     onChange={(e) =>
                       handleInputChange("fullName", e.target.value)
                     }
-                    className="w-full px-3 py-2  border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:placeholder-gray-300 placeholder-[#272A2D]"
                     placeholder="Enter your full name"
                   />
                   {errors.fullName && (
@@ -452,7 +452,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                   )}
                 </div>
                 <div>
-                  <label className="text-gray-300 text-sm block mb-2 text-left">
+                  <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                     Phone Number
                   </label>
                   <input
@@ -462,7 +462,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     onChange={(e) =>
                       handleInputChange("phoneNumber", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:placeholder-gray-300 placeholder-[#272A2D]"
                     placeholder="Enter your phone number"
                   />
                   {errors.phoneNumber && (
@@ -472,7 +472,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                   )}
                 </div>
                 <div>
-                  <label className="text-gray-300 text-sm block mb-2 text-left">
+                  <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                     Address
                   </label>
                   <input
@@ -481,7 +481,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     onChange={(e) =>
                       handleInputChange("address", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:placeholder-gray-300 placeholder-[#272A2D]"
                     placeholder="Enter your address"
                   />
                   {errors.address && (
@@ -493,7 +493,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="text-gray-300 text-sm block mb-2 text-left">
+                  <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                     Email Address
                   </label>
                   <input
@@ -503,7 +503,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     onChange={(e) =>
                       handleInputChange("emailAddress", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:placeholder-gray-300 placeholder-[#272A2D]"
                     placeholder="Enter your email"
                   />
                   {errors.emailAddress && (
@@ -513,7 +513,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                   )}
                 </div>
                 <div>
-                  <label className="text-gray-300 text-sm block mb-2 text-left">
+                  <label className="dark:text-gray-300 text-[#272A2D] text-sm block mb-2 text-left">
                     Company
                   </label>
                   <input
@@ -522,7 +522,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     onChange={(e) =>
                       handleInputChange("company", e.target.value)
                     }
-                    className="w-full px-3 py-2 border border-[#2563EB66] text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:placeholder-gray-300 placeholder-[#272A2D]"
                     placeholder="Enter your company name"
                   />
                   {errors.company && (
@@ -537,10 +537,10 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
 
           <div className="flex justify-between mt-8">
             {currentStep > 1 && (
-              <div className="bg-[#1C1C1C]">
+              <div className="dark:bg-[#1C1C1C]">
                 <button
                   onClick={handleBack}
-                  className="px-4 py-2 sm:w-[215px] rounded  border border-[#2563EB66] text-gray-300  transition-colors"
+                  className="px-4 py-2 sm:w-[215px] rounded border border-[#2563EB66] dark:text-gray-300 text-[#272A2D] transition-colors"
                 >
                   Back
                 </button>
@@ -557,7 +557,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     (currentStep === 2 &&
                       (!formData.budgetRange || !formData.timeline))
                   }
-                  className={`px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors ${
+                  className={`px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] dark:text-white text-[#272A2D] transition-colors ${
                     (currentStep === 1 &&
                       (!formData.projectType || !formData.additionalInfo)) ||
                     (currentStep === 2 &&
@@ -578,7 +578,7 @@ const GetAQuote = ({ handleQuoteClose }: { handleQuoteClose: () => void }) => {
                     !formData.company ||
                     !formData.address
                   }
-                  className={`px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] text-white transition-colors ${
+                  className={`px-4 py-2 sm:w-[215px] rounded bg-gradient-to-r from-[#2563eb] via-[#2ca2f4] to-[#34e5ff] dark:text-white text-[#272A2D] transition-colors ${
                     !formData.fullName ||
                     !formData.emailAddress ||
                     !formData.phoneNumber ||

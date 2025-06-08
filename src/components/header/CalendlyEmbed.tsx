@@ -15,7 +15,7 @@ const CalendlyEmbed = ({ url }: { url: string }) => {
 
   return (
     <div
-      className="calendly-inline-widget bg-[#222222] dark:bg-transparent -mt-5 dark:mt-0"
+      className="calendly-inline-widget  dark:bg-transparent -mt-5 dark:mt-0"
       data-url={url}
       style={{
         height: "650px",
@@ -23,6 +23,7 @@ const CalendlyEmbed = ({ url }: { url: string }) => {
         position: "absolute",
         top: "790px",
         zIndex: 40,
+        
       }}
     ></div>
   );
