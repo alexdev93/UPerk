@@ -9,16 +9,16 @@ interface BlogBannerProps {
   onShowBlogDetail: () => void;
   blogDetail: boolean;
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  blogs: any[]; // Assuming blogs is an array of blog objects
+  blogData: any; // Assuming blogs is an array of blog objects
 }
 
 const BlogBanner: React.FC<BlogBannerProps> = ({
   onShowBlogDetail,
   blogDetail,
-  blogs,
+  blogData,
 }) => {
   // Use the first blog or fallback to defaults
-  const blog = blogs[0] || {
+  const blog = blogData || {
     username: "Unknown",
     title: "No Blog Available",
     content: "<p>No content available.</p>",
@@ -32,7 +32,11 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
     const text = firstParagraph
       ? firstParagraph.textContent
       : "No content available.";
-    return text? text?.length > 70 ? text.substring(0, 67) + "..." : text : "";
+    return text
+      ? text?.length > 70
+        ? text.substring(0, 67) + "..."
+        : text
+      : "";
   };
 
   // Extract first image URL from content
@@ -58,7 +62,7 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
           level={1}
           className="dark:text-[#E8E9EA] text-4xl text-[#272A2D] md:text-5xl font-extrabold leading-tight"
         >
-          {blog.title.split(" ").map((word:any, index:any) => (
+          {blog.title?.split(" ").map((word: any, index: any) => (
             <React.Fragment key={index}>
               {word}
               {index < blog.title.split(" ").length - 1 && " "}
@@ -66,9 +70,11 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
             </React.Fragment>
           ))}
         </Heading>
-        <Paragraph className="text-lg md:text-xl max-w-md dark:text-[#A5A5A5] text-[#A5A5A5]">
-          {getFirstParagraph(blog.content)}
-        </Paragraph>
+        {!blogDetail && (
+          <Paragraph className="text-lg md:text-xl max-w-md dark:text-[#A5A5A5] text-[#A5A5A5]">
+            {getFirstParagraph(blog.content)}
+          </Paragraph>
+        )}
         {!blogDetail ? (
           <GradientButton
             className="rounded-[22px] cursor-pointer"

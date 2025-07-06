@@ -11,14 +11,15 @@ import { Footer } from "@/components/footer/Fotter";
 import ProjectPlanningSteps from "@/components/MVP-for-startup";
 import Chatbot from "@/components/chatbot/Chatbot";
 import CaseStudy from "@/components/case-studies-section";
-export default function Home() {
+
+export default async function Home() {
   return (
     <div className="mb-[30px]">
       <Header />
       <div className="flex justify-center">
         <TrustedBy />
         <div className="mt-35 mr-7">
-          <Chatbot  />
+          <Chatbot />
         </div>
       </div>
       <Support />
@@ -26,11 +27,11 @@ export default function Home() {
       <AICapabilitiesForBUsiness />
       <DevelopmentPipeline />
       <TransformedBusiness />
-      < CaseStudy />
+      <CaseStudy />
       <AIInsightsTrends />
       <TechStackSection />
       <Subscrib />
-      <Footer />   
+      <Footer />
     </div>
   );
 }
