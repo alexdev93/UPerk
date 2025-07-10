@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
+const PROTOCOL = process.env.NEXT_PUBLIC_PROTOCOL || "https";
+const HOSTNAME =
+  process.env.NEXT_PUBLIC_HOSTNAME ||
+  "graceful-bubble-4a6d1d121b.strapiapp.com";
 
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "cdn-images-1.medium.com",
+        protocol:
+          PROTOCOL === "http" || PROTOCOL === "https" ? PROTOCOL : "https",
+        hostname: HOSTNAME,
       },
     ],
   },

@@ -3,6 +3,8 @@
 import React from "react";
 import { Heading } from "../common/Heading";
 import { Paragraph } from "../common/Paragraph";
+import BlockRendererClient from "../common/BlockRendererClient";
+import { type BlocksContent } from "@strapi/blocks-react-renderer";
 
 interface BlogDetailProps {
   blogDetail: boolean;
@@ -10,7 +12,7 @@ interface BlogDetailProps {
     title?: string;
     username?: string;
     pubDate?: string;
-    content?: string;
+    content?: BlocksContent;
   };
 }
 
@@ -33,15 +35,7 @@ const DynamicBlogDetail: React.FC<BlogDetailProps> = ({ blogDetail, blog }) => {
           ? new Date(blog.pubDate).toLocaleDateString()
           : "No Date Available"}
       </Paragraph>
-      <div
-        className="prose dark:prose-invert max-w-none
-    prose-p:mb-6 prose-p:text-[#272A2D] dark:prose-p:text-[#E8E9EA]
-    prose-h3:text-xl prose-h3:font-bold prose-h3:mb-4 prose-h3:text-[#272A2D] dark:prose-h3:text-[#E8E9EA]
-    prose-img:rounded-lg prose-img:max-w-full prose-img:mb-6
-    prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600 dark:prose-blockquote:text-gray-300
-    prose-a:text-blue-600 hover:prose-a:underline"
-        dangerouslySetInnerHTML={{ __html: blog.content }}
-      />
+      <BlockRendererClient content={blog.content} />
     </div>
   );
 };

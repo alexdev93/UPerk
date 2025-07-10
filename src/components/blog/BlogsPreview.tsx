@@ -4,8 +4,6 @@ import { Heading } from "../common/Heading";
 import { Paragraph } from "../common/Paragraph";
 import { CardProps } from "./types";
 
-
-
 const BlogsPreview: React.FC<CardProps> = ({
   imgUrl,
   buttonText,
@@ -15,13 +13,15 @@ const BlogsPreview: React.FC<CardProps> = ({
 }) => {
   return (
     <div className="max-w-[273px] flex-shrink-0 text-white rounded-lg shadow-lg flex flex-col">
-      <Image
-        src={imgUrl}
-        alt="Card Image"
-        className="w-full h-48 object-cover"
-        width={400}
-        height={200}
-      />
+      {imgUrl && (
+        <Image
+          src={imgUrl}
+          alt="Card Image"
+          className="w-full h-48 object-cover"
+          width={400}
+          height={200}
+        />
+      )}
       <div className="p-4 text-center flex flex-col flex-grow justify-between">
         <div>
           <button className="w-[95px] inline-block bg-[#2664EC1A] dark:bg-black text-xs text-[#2563EB] font-semibold px-2 py-1 rounded-[10.5px] mb-2">
@@ -49,7 +49,5 @@ const BlogsPreview: React.FC<CardProps> = ({
     </div>
   );
 };
-
-
 
 export default BlogsPreview;
