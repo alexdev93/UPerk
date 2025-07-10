@@ -116,9 +116,9 @@ const Blog = () => {
             </div>
           )}
 
-          <div className="overflow-x-auto   snap-x snap-mandatory scroll-px-6 p-6">
-            <div className="flex gap-6 pl-6 pr-6 justify-center">
-                  {blogs.map((blog) => 
+          <div className="p-6 flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
+              {blogs.map((blog) =>
                 <BlogsPreview
                   key={blog.id}
                   imgUrl={getImageUrlFromContent(blog.content) || "/images/insights/fallback-blog-image.svg"}
