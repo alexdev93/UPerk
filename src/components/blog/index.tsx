@@ -8,7 +8,8 @@ import DynamicBlogDetail from "./DynamicBlogDetail";
 import PreLoader from "../common/PreLoader";
 import { ArticleData } from "./types";
 import BlogsPreview from "./BlogsPreview";
-import axios from "axios";
+// import axios from "axios";
+import { fetchFromStrapi } from "@/lib/api";
 // import { fetchFromStrapi } from "@/lib/api";
 
 // Extract first paragraph from content for AIInsightCard description
@@ -43,31 +44,34 @@ const Blog = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      // try {
-      //   const response = await fetchFromStrapi("blogs?populate=*");
-      //   const data = response.data || []; // Adjust based on your API response structure
-      //   setBlogs(data); // Assuming the API returns the blog data in posts
-      //   setSingleBlog(data[0] || null); // Set the first blog as singleBlog
-      // } catch (error) {
-      //   setError("error");
-      //   console.error("Error fetching blogs:", error);
-      // }
-      axios
-        .get(
-          "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/blogs"
-        )
-        .then((response) => {
-          setBlogs(response.data.posts); // Assuming the API returns the blog data in posts
-          setSingleBlog(response.data.posts[0] || null);
-        })
-        .catch((error) => {
-          setError("error");
-          console.error("Error fetching blogs:", error);
-        });
+      try {
+        const response = await fetchFromStrapi("blogs?populate=*");
+        const data = response.data || [];
+        setBlogs(response.data); // Assuming the API returns the blog data in posts
+        setSingleBlog(response.data[0] || null);
+        console.log("strapi", data[0]);
+      } catch (error) {
+        setError("error");
+        console.error("Error fetching blogs:", error);
+      }
+      // axios
+      //   .get(
+      //     "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/blogs"
+      //   )
+      //   .then((response) => {
+      //     setBlogs(response.data.posts); // Assuming the API returns the blog data in posts
+      //     setSingleBlog(response.data.posts[0] || null);
+      //   })
+      //   .catch((error) => {
+      //     setError("error");
+      //     console.error("Error fetching blogs:", error);
+      //   });
     };
 
     fetchBlogs();
   }, []);
+
+  // console.log("medium", singleBlog);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -163,7 +167,7 @@ const Blog = () => {
               ))}
             </div>
           </div>
-          {!blogDetail && (
+          {/* {!blogDetail && (
             <div className="overflow-x-auto   snap-x snap-mandatory scroll-px-6 p-6">
               <div className="flex gap-6 pl-6 pr-6 justify-center">
                 {blogs.map((blog) => (
@@ -178,7 +182,7 @@ const Blog = () => {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
           <div className="mt-[120px] mb-[30px]">
             <Footer />
           </div>
