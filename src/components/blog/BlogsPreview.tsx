@@ -20,7 +20,7 @@ const BlogsPreview: React.FC<CardProps> = ({
           className="w-full h-48 object-cover"
           width={400}
           height={200}
-          priority
+          // priority
         />
       )}
       <div className="p-4 text-center flex flex-col flex-grow justify-between">

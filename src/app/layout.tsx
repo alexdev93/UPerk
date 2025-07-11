@@ -4,12 +4,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./globals.css";
+import Navebar from "@/components/header/Navebar";
 
 const inter = Roboto({
   subsets: ["latin"],
   display: "swap",
 });
-
 
 export const metadata: Metadata = {
   title: "Universal Perk Custom AI",
@@ -25,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <ToastContainer />
+        <Navebar />
         {children}
       </body>
     </html>

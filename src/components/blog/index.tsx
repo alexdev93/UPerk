@@ -1,9 +1,6 @@
-"use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import BlogBanner from "./BlogBanner";
 import { Footer } from "../footer/Fotter";
-import Navebar from "../header/Navebar";
 import DynamicBlogDetail from "./DynamicBlogDetail";
 import PreLoader from "../common/PreLoader";
 import { ArticleData } from "./types";
@@ -14,7 +11,6 @@ import { getDescriptionFromContent, getImageUrlFromContent } from "@/lib/utils";
 
 const Blog = () => {
   const [blogDetail, setBlogDetail] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [blogs, setBlogs] = useState<ArticleData[]>([]);
   const [singleBlog, setSingleBlog] = useState<ArticleData | null>(null);
   const [error, setError] = useState("");
@@ -34,10 +30,6 @@ const Blog = () => {
 
     fetchBlogs();
   }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const handleReadBlog = () => {
     setBlogDetail(!blogDetail);
@@ -64,8 +56,6 @@ const Blog = () => {
 
   return (
     <>
-      <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
-
       {blogs.length === 0 ? (
         <div className="mt-50">
           <PreLoader />

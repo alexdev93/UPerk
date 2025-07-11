@@ -5,7 +5,6 @@ import BorderGradientButton from "../common/BorderGradientButton";
 import GradientButton from "../common/BgGradientButton";
 import { Heading } from "@/components/common/Heading";
 import { Paragraph } from "../common/Paragraph";
-import Navebar from "./Navebar";
 import GetAQuote from "../get-a-quote/GetAQuote";
 import CalendlyEmbed from "./CalendlyEmbed";
 // import VoiceAi from "@/components/header/VoiceAI";
@@ -13,7 +12,6 @@ import CalendlyEmbed from "./CalendlyEmbed";
 import Overlay from "../common/Overlay";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   // const [isRecording, setIsRecording] = useState(false)
@@ -24,10 +22,6 @@ const Header = () => {
     } else {
       setShowCalendly(true); // Show the Calendly widget
     }
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
   };
 
   const handleQuoteOpen = () => {
@@ -46,7 +40,6 @@ const Header = () => {
         </div>
       )}
       <div className="max-w-7xl sm:px-10 px-4 mx-auto mt-[25px]">
-        <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
         {/* Hero Section */}
         <div className="relative flex flex-col items-center justify-center text-center mt-[40px] px-4">
           {/* Glowing Background Behind the Mic */}
@@ -117,7 +110,6 @@ const Header = () => {
           <Overlay>
             <GetAQuote handleQuoteClose={handleQuoteClose} />
           </Overlay>
-
         </div>
       )}
     </>

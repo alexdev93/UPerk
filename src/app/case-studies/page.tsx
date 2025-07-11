@@ -1,11 +1,12 @@
 import React from "react";
-import CaseStudies from "@/components/case-studies/";
+import CaseStudy from "@/components/case-studies-section";
+
 const page = () => {
   return (
     <div>
-      <CaseStudies />
+      <CaseStudy />
     </div>
-  )
-}
+  );
+};
 
 export default page;
