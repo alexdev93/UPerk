@@ -4,22 +4,12 @@ import React from "react";
 import Image from "next/image";
 import BorderGradientButton from "../common/BorderGradientButton";
 import GradientButton from "../common/BgGradientButton";
-const caseStudiesData = [
-  {
-    imageUrl: "/images/case-studies/iPhone-15.svg",
-    title: "DASGUZO: REVOLUTIONIZING PEER-TO-PEER CAR RENTALS",
-    paragraph:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec eros ut justo consequat malesuada. Integer nec eros ac urna feugiat dapibus nec sit amet lorem. Vivamus nec justo id sapien auctor scelerisque. Sed non libero auctor, tempus urna nec, efficitur nulla.",
-  },
-  {
-    imageUrl: "/images/case-studies/Macbook_Laptop.svg",
-    title: "ENHANCING ORGANIZATIONAL EFFICIENCY WITH A CRM SOLUTION",
-    paragraph:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec eros ut justo consequat malesuada. Integer nec eros ac urna feugiat dapibus nec sit amet lorem. Vivamus nec justo id sapien auctor scelerisque.",
-  },
-];
+import { useRouter } from "next/navigation";
+import { CaseStudiesProps } from "./types";
 
-const CaseStudiesOfSuccess = () => {
+
+const CaseStudiesOfSuccess = ({ caseStudiesData }: CaseStudiesProps) => {
+  const router = useRouter();
   return (
     <div className=" text-white py-16 px-8">
       {caseStudiesData.map((study, index) => (
@@ -73,7 +63,14 @@ const CaseStudiesOfSuccess = () => {
               {study.paragraph}
             </p>
 
-            <BorderGradientButton text="Read More" />
+            <BorderGradientButton
+              text="Read More"
+              onHandleBookAcall={() => {
+                if (study.route) {
+                  router.push(study.route);
+                }
+              }}
+            />
           </div>
         </div>
       ))}

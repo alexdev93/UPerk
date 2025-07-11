@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
-import Link from 'next/link';
-import Image from 'next/image';
-import BorderGradientButton from '../common/BorderGradientButton';
-import GetAQuote from '../get-a-quote/GetAQuote';
-import Overlay from '../common/Overlay';
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import BorderGradientButton from "../common/BorderGradientButton";
+import GetAQuote from "../get-a-quote/GetAQuote";
+import Overlay from "../common/Overlay";
 
-interface NavBarProps {
-  toggleMenu: () => void;
-  isMenuOpen: boolean
-} 
+const Navebar: React.FC = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleQuoteClose = () => {
+    setShowForm(false);
+  };
 
-const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
-    const [showForm, setShowForm] = useState(false);
-    const handleQuoteClose = () => {
-      setShowForm(false);
-    };
-  
-    const handleQuoteOpen = () => {
-      setShowForm(true);
-    };
-  
+  const handleQuoteOpen = () => {
+    setShowForm(true);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <>
       {/* Top Bar */}
@@ -130,11 +131,10 @@ const Navebar: React.FC<NavBarProps> = ({ toggleMenu, isMenuOpen }) => {
           <Overlay>
             <GetAQuote handleQuoteClose={handleQuoteClose} />
           </Overlay>
-
         </div>
       )}
     </>
   );
 };
 
-export default Navebar
+export default Navebar;

@@ -1,80 +1,61 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import AIInsightCard from "../ai-insights-trends/AIInsightCard";
+import React, { useEffect, useRef, useState } from "react";
 import BlogBanner from "./BlogBanner";
 import { Footer } from "../footer/Fotter";
-// import BlogDetail from "./BlogDetail";
-import Navebar from "../header/Navebar";
-import axios from "axios";
 import DynamicBlogDetail from "./DynamicBlogDetail";
 import PreLoader from "../common/PreLoader";
-interface ArticleData {
-  content: string;
-  fetchedAt: string; // ISO string, e.g., "2025-05-24T19:33:37.636Z"
-  id: string; // UUID, e.g., "2c72e05a-8b59-4230-8269-4723022a3308"
-  link: string; // URL to the article
-  pubDate: string; // Publication date as string, e.g., "2019-01-20 07:16:34"
-  title: string; // Title of the article
-  username: string; // Author's username
-}
+import { ArticleData } from "./types";
+import BlogsPreview from "./BlogsPreview";
+import { fetchFromStrapi } from "@/lib/api";
+import { getDescriptionFromContent, getImageUrlFromContent } from "@/lib/utils";
+
 
 const Blog = () => {
   const [blogDetail, setBlogDetail] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [blogs, setBlogs] = useState<ArticleData[]>([]);
+  const [singleBlog, setSingleBlog] = useState<ArticleData | null>(null);
   const [error, setError] = useState("");
-
-  console.log("see  the blog", blogs);
+  const blogDetailRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://nbttrereyf.execute-api.us-east-1.amazonaws.com/prod/api/blogs"
-      )
-      .then((response) => {
-        setBlogs(response.data.posts); // Assuming the API returns the blog data in posts
-      })
-      .catch((error) => {
+    const fetchBlogs = async () => {
+      try {
+        const data = await fetchFromStrapi("blogs?populate=*") || [];
+        setBlogs(data);
+        setSingleBlog(data[0] || null);
+      } catch (error) {
         setError("error");
         console.error("Error fetching blogs:", error);
-      });
-  }, []);
+      }
+    }
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    fetchBlogs();
+  }, []);
 
   const handleReadBlog = () => {
     setBlogDetail(!blogDetail);
   };
 
-  // Extract first paragraph from content for AIInsightCard description
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  const getFirstParagraph = (content: any) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, "text/html");
-    const firstParagraph = doc.querySelector("p");
-    return firstParagraph
-      ? firstParagraph.textContent?.substring(0, 143) + "..."
-      : "";
-  };
+  const handleReadMore = (blog: ArticleData) => {
+    setSingleBlog(blog);
+    setBlogDetail(true);
 
-  // Extract first image URL from content for AIInsightCard imgUrl
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  const getFirstImage = (content: any) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, "text/html");
-    const firstImage = doc.querySelector("img");
-    return firstImage
-      ? firstImage.src
-      : "/images/insights/fallback-blog-image.svg"; // Fallback image if none found
+    // Remove the selected blog from the blogs list
+    if (blogs.length > 1) {
+      setBlogs((prevBlogs) => prevBlogs.filter((b) => b.id !== blog.id));
+    }
+    // Clear blogs if only one blog was present
+
+    // Scroll to the blog detail section
+    setTimeout(() => {
+      blogDetailRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 0);
   };
 
   return (
     <>
-      <Navebar toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
-
       {blogs.length === 0 ? (
         <div className="mt-50">
           <PreLoader />
@@ -84,7 +65,7 @@ const Blog = () => {
           className={`flex flex-col justify-center items-center min-h-[30vh] mx-auto mt-4 w-full
            text-primary rounded-lg py-4`}
         >
-          <div className=" text-red-800 rounded-xl p-4 " >
+          <div className=" text-red-800 rounded-xl p-4 ">
             <h4
               className="font-bold text-center text-primary mb-0"
               style={{
@@ -97,31 +78,47 @@ const Blog = () => {
         </div>
       ) : (
         <>
-          <div className="mb-12">
+          <div className="relative flex items-center justify-center mb-12">
+            {/* Glowing Circular Background Behind BlogBanner */}
+            <div
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full opacity-50 blur-[85px] z-[-1]"
+              style={{
+                background:
+                  "linear-gradient(to bottom, #2563EB, #2CA2F4, #34E5FF)",
+              }}
+            />
+
+            {/* BlogBanner Content */}
             <BlogBanner
               onShowBlogDetail={handleReadBlog}
               blogDetail={blogDetail}
-              blogs={blogs}
+              blogData={singleBlog || {}}
             />
           </div>
-          {!blogDetail && (
-            <div className="p-6 flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
-                {blogs.slice(0, 8).map((blog) => (
-                  <AIInsightCard
-                    key={blog.id}
-                    imgUrl={getFirstImage(blog.content)}
-                    buttonText={`${blog.username}`}
-                    description={getFirstParagraph(blog.content) || ""}
-                    title={blog.title}
-                  />
-                ))}
-              </div>
+
+          {blogDetail && (
+            <div ref={blogDetailRef}>
+              <DynamicBlogDetail
+                blogDetail={blogDetail}
+                blog={singleBlog || {}}
+              />
             </div>
           )}
-          {blogDetail && (
-            <DynamicBlogDetail blogDetail={blogDetail} blog={blogs[0] || {}} />
-          )}
+
+          <div className="p-6 flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
+              {blogs.map((blog) =>
+                <BlogsPreview
+                  key={blog.id}
+                  imgUrl={getImageUrlFromContent(blog.content) || "/images/insights/fallback-blog-image.svg"}
+                  buttonText={`${blog.username}`}
+                  description={getDescriptionFromContent(blog.content) || ""}
+                  title={blog.title}
+                  handleClick={() => handleReadMore(blog)}
+                />
+              )}
+            </div>
+          </div>
           <div className="mt-[120px] mb-[30px]">
             <Footer />
           </div>
