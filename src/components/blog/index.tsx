@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useRef, useState } from "react";
 import BlogBanner from "./BlogBanner";
@@ -30,9 +30,9 @@ const Blog = ({ initialBlogs }: BlogProps) => {
     setBlogDetail(true);
 
     // Remove selected blog from preview list
-    if (blogs.length > 1) {
-      setBlogs((prevBlogs) => prevBlogs.filter((b) => b.id !== blog.id));
-    }
+    // if (blogs.length > 1) {
+    //   setBlogs(initialBlogs.filter((b) => b.id !== singleBlog?.id));
+    // }
 
     // Smooth scroll to detail
     requestAnimationFrame(() => {
@@ -89,9 +89,7 @@ const Blog = ({ initialBlogs }: BlogProps) => {
                     "/images/insights/fallback-blog-image.svg"
                   }
                   buttonText={`${blog.username}`}
-                  description={
-                    getDescriptionFromContent(blog.content) || ""
-                  }
+                  description={getDescriptionFromContent(blog.content) || ""}
                   title={blog.title}
                   handleClick={() => handleReadMore(blog)}
                 />
