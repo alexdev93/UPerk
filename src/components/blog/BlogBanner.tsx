@@ -70,6 +70,7 @@ const BlogBanner: React.FC<BlogBannerProps> = ({
               width={542}
               height={363}
               className="w-full h-full object-cover"
+              priority
             />
           ) : (
             <div className="w-full h-full bg-gray-100 flex items-center justify-center">

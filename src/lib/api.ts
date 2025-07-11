@@ -2,18 +2,19 @@
 const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 export async function fetchFromStrapi(endpoint: string, options = {}) {
-  const res = await fetch(`${API_URL}/${endpoint}`, {
+  const response = await fetch(`${API_URL}/${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
     },
     ...options,
   });
 
-  if (!res.ok) {
-    throw new Error(`Strapi fetch error: ${res.statusText}`);
+  if (!response.ok) {
+    throw new Error(`Fetch error: ${response.statusText}`);
   }
 
-  const data = await res.json();
+  const res = await response.json();
+  const data = res.data || res; // Handle both data and direct response formats
 
   if (data.error) {
     throw new Error(`Strapi error: ${data.error.message}`);
