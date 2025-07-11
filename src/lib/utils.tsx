@@ -1,4 +1,5 @@
-// lib/utils.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -15,7 +16,7 @@ export const getDescriptionFromContent = (content: any): string | null => {
 
   const firstText =
     firstParagraph?.children
-      ?.find((child) => typeof child?.text === "string")
+      ?.find((child: any) => typeof child?.text === "string")
       ?.text.slice(0, 143) + "...";
 
   return firstText || "";

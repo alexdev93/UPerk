@@ -1,16 +1,16 @@
-'use client'
-import dynamic from "next/dynamic";
-// Dynamically import the Blog component
-const Blog = dynamic(() => import("@/components/blog"), {
-  ssr: false, // Optional: Disable server-side rendering if needed
-});
+import Blog from "@/components/blog";
+import { fetchFromStrapi } from "@/lib/api";
+import { ArticleData } from "@/components/blog/types";
 
-const Page = () => {
-  return (
-    <div>
-      <Blog />
-    </div>
-  );
-};
+// ✅ App Router supports async Server Components
+export default async function BlogPage() {
+  let blogs: ArticleData[] = [];
 
-export default Page;
+  try {
+    blogs = await fetchFromStrapi("blogs?populate=*");
+  } catch (error) {
+    console.error("Failed to fetch blogs:", error);
+  }
+
+  return <Blog initialBlogs={blogs} />;
+}

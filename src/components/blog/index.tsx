@@ -1,57 +1,45 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import React, { useRef, useState } from "react";
 import BlogBanner from "./BlogBanner";
-import { Footer } from "../footer/Fotter";
 import DynamicBlogDetail from "./DynamicBlogDetail";
 import PreLoader from "../common/PreLoader";
 import { ArticleData } from "./types";
 import BlogsPreview from "./BlogsPreview";
-import { fetchFromStrapi } from "@/lib/api";
 import { getDescriptionFromContent, getImageUrlFromContent } from "@/lib/utils";
 
+interface BlogProps {
+  initialBlogs: ArticleData[];
+}
 
-const Blog = () => {
+const Blog = ({ initialBlogs }: BlogProps) => {
   const [blogDetail, setBlogDetail] = useState(false);
-  const [blogs, setBlogs] = useState<ArticleData[]>([]);
-  const [singleBlog, setSingleBlog] = useState<ArticleData | null>(null);
-  const [error, setError] = useState("");
+  const [blogs] = useState<ArticleData[]>(initialBlogs);
+  const [singleBlog, setSingleBlog] = useState<ArticleData | null>(
+    initialBlogs[0] || null
+  );
   const blogDetailRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const data = await fetchFromStrapi("blogs?populate=*") || [];
-        setBlogs(data);
-        setSingleBlog(data[0] || null);
-      } catch (error) {
-        setError("error");
-        console.error("Error fetching blogs:", error);
-      }
-    }
-
-    fetchBlogs();
-  }, []);
-
   const handleReadBlog = () => {
-    setBlogDetail(!blogDetail);
+    setBlogDetail((prev) => !prev);
   };
 
   const handleReadMore = (blog: ArticleData) => {
     setSingleBlog(blog);
     setBlogDetail(true);
 
-    // Remove the selected blog from the blogs list
-    if (blogs.length > 1) {
-      setBlogs((prevBlogs) => prevBlogs.filter((b) => b.id !== blog.id));
-    }
-    // Clear blogs if only one blog was present
+    // Remove selected blog from preview list
+    // if (blogs.length > 1) {
+    //   setBlogs(initialBlogs.filter((b) => b.id !== singleBlog?.id));
+    // }
 
-    // Scroll to the blog detail section
-    setTimeout(() => {
+    // Smooth scroll to detail
+    requestAnimationFrame(() => {
       blogDetailRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
-    }, 0);
+    });
   };
 
   return (
@@ -60,26 +48,10 @@ const Blog = () => {
         <div className="mt-50">
           <PreLoader />
         </div>
-      ) : error ? (
-        <div
-          className={`flex flex-col justify-center items-center min-h-[30vh] mx-auto mt-4 w-full
-           text-primary rounded-lg py-4`}
-        >
-          <div className=" text-red-800 rounded-xl p-4 ">
-            <h4
-              className="font-bold text-center text-primary mb-0"
-              style={{
-                fontSize: "1rem",
-              }}
-            >
-              Oops! Something went wrong while loading the blogs
-            </h4>
-          </div>
-        </div>
       ) : (
         <>
+          {/* Blog Banner with background glow */}
           <div className="relative flex items-center justify-center mb-12">
-            {/* Glowing Circular Background Behind BlogBanner */}
             <div
               className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full opacity-50 blur-[85px] z-[-1]"
               style={{
@@ -88,7 +60,6 @@ const Blog = () => {
               }}
             />
 
-            {/* BlogBanner Content */}
             <BlogBanner
               onShowBlogDetail={handleReadBlog}
               blogDetail={blogDetail}
@@ -96,6 +67,7 @@ const Blog = () => {
             />
           </div>
 
+          {/* Blog detail section */}
           {blogDetail && (
             <div ref={blogDetailRef}>
               <DynamicBlogDetail
@@ -105,22 +77,23 @@ const Blog = () => {
             </div>
           )}
 
+          {/* Blog list preview */}
           <div className="p-6 flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
-              {blogs.map((blog) =>
+              {blogs.map((blog) => (
                 <BlogsPreview
                   key={blog.id}
-                  imgUrl={getImageUrlFromContent(blog.content) || "/images/insights/fallback-blog-image.svg"}
+                  imgUrl={
+                    getImageUrlFromContent(blog.content) ||
+                    "/images/insights/fallback-blog-image.svg"
+                  }
                   buttonText={`${blog.username}`}
                   description={getDescriptionFromContent(blog.content) || ""}
                   title={blog.title}
                   handleClick={() => handleReadMore(blog)}
                 />
-              )}
+              ))}
             </div>
-          </div>
-          <div className="mt-[120px] mb-[30px]">
-            <Footer />
           </div>
         </>
       )}
