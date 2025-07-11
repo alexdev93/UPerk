@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./globals.css";
 import Navebar from "@/components/header/Navebar";
+import { Footer } from "@/components/footer/Fotter";
 
 const inter = Roboto({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
         <ToastContainer />
         <Navebar />
         {children}
+        <Footer />
       </body>
     </html>
   );

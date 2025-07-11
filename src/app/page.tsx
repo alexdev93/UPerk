@@ -7,7 +7,6 @@ import AIInsightsTrends from "@/components/ai-insights-trends";
 import Subscrib from "@/components/subscribe/Subscrib";
 import TechStackSection from "@/components/technologies/TechStackSection";
 import DevelopmentPipeline from "@/components/development-pipline";
-import { Footer } from "@/components/footer/Fotter";
 import ProjectPlanningSteps from "@/components/MVP-for-startup";
 import Chatbot from "@/components/chatbot/Chatbot";
 import CaseStudy from "@/components/case-studies-section";
@@ -31,7 +30,6 @@ export default async function Home() {
       <AIInsightsTrends />
       <TechStackSection />
       <Subscrib />
-      <Footer />
     </div>
   );
 }

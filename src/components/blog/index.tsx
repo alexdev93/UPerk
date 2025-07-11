@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import BlogBanner from "./BlogBanner";
-import { Footer } from "../footer/Fotter";
 import DynamicBlogDetail from "./DynamicBlogDetail";
 import PreLoader from "../common/PreLoader";
 import { ArticleData } from "./types";
@@ -15,7 +14,7 @@ interface BlogProps {
 
 const Blog = ({ initialBlogs }: BlogProps) => {
   const [blogDetail, setBlogDetail] = useState(false);
-  const [blogs, setBlogs] = useState<ArticleData[]>(initialBlogs);
+  const [blogs] = useState<ArticleData[]>(initialBlogs);
   const [singleBlog, setSingleBlog] = useState<ArticleData | null>(
     initialBlogs[0] || null
   );
@@ -95,11 +94,6 @@ const Blog = ({ initialBlogs }: BlogProps) => {
                 />
               ))}
             </div>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-[120px] mb-[30px]">
-            <Footer />
           </div>
         </>
       )}
