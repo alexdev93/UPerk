@@ -12,5 +12,11 @@ export async function fetchFromStrapi(endpoint: string, options = {}) {
   if (!res.ok) {
     throw new Error(`Strapi fetch error: ${res.statusText}`);
   }
-  return await res.json();
+
+  const data = await res.json();
+
+  if (data.error) {
+    throw new Error(`Strapi error: ${data.error.message}`);
+  }
+  return data;
 }

@@ -23,9 +23,8 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetchFromStrapi("blogs?populate=*");
-        const data = response.data || [];
-        setBlogs(data); // Assuming the API returns the blog data in posts
+        const data = await fetchFromStrapi("blogs?populate=*") || [];
+        setBlogs(data);
         setSingleBlog(data[0] || null);
       } catch (error) {
         setError("error");
@@ -130,22 +129,6 @@ const Blog = () => {
               )}
             </div>
           </div>
-          {/* {!blogDetail && (
-            <div className="overflow-x-auto   snap-x snap-mandatory scroll-px-6 p-6">
-              <div className="flex gap-6 pl-6 pr-6 justify-center">
-                {blogs.map((blog) => (
-                  <BlogsPreview
-                    key={blog.id}
-                    imgUrl={getFirstImage(blog.content)}
-                    buttonText={`${blog.username}`}
-                    description={getFirstParagraph(blog.content) || ""}
-                    title={blog.title}
-                    handleClick={() => handleReadMore(blog)}
-                  />
-                ))}
-              </div>
-            </div>
-          )} */}
           <div className="mt-[120px] mb-[30px]">
             <Footer />
           </div>
