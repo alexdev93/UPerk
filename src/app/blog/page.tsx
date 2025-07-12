@@ -7,7 +7,7 @@ export default async function BlogPage() {
   let blogs: ArticleData[] = [];
 
   try {
-    blogs = await fetchFromStrapi("blogs?populate=*");
+    blogs = await fetchFromStrapi("blogs", {});
   } catch (error) {
     console.error("Failed to fetch blogs:", error);
   }
