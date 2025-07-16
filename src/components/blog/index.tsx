@@ -1,12 +1,11 @@
 "use client";
-
 import React, { useRef, useState } from "react";
 import BlogBanner from "./BlogBanner";
 import DynamicBlogDetail from "./DynamicBlogDetail";
 import PreLoader from "../common/PreLoader";
 import { ArticleData } from "./types";
 import BlogsPreview from "./BlogsPreview";
-import { getDescriptionFromContent, getImageUrlFromContent } from "@/lib/utils";
+// import { getDescriptionFromContent, getImageUrlFromContent } from "@/lib/utils";
 
 interface BlogProps {
   initialBlogs: ArticleData[];
@@ -14,7 +13,7 @@ interface BlogProps {
 
 const Blog = ({ initialBlogs }: BlogProps) => {
   const [blogDetail, setBlogDetail] = useState(false);
-  const [blogs] = useState<ArticleData[]>(initialBlogs);
+  const [blogs, setBlogs] = useState<ArticleData[]>(initialBlogs);
   const [singleBlog, setSingleBlog] = useState<ArticleData | null>(
     initialBlogs[0] || null
   );
@@ -29,9 +28,9 @@ const Blog = ({ initialBlogs }: BlogProps) => {
     setBlogDetail(true);
 
     // Remove selected blog from preview list
-    // if (blogs.length > 1) {
-    //   setBlogs(initialBlogs.filter((b) => b.id !== singleBlog?.id));
-    // }
+    if (blogs.length > 1) {
+      setBlogs(initialBlogs.filter((b) => b.id !== singleBlog?.id));
+    }
 
     // Smooth scroll to detail
     requestAnimationFrame(() => {
@@ -78,23 +77,8 @@ const Blog = ({ initialBlogs }: BlogProps) => {
           )}
 
           {/* Blog list preview */}
-          <div className="p-6 flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12">
-              {blogs.map((blog) => (
-                <BlogsPreview
-                  key={blog.id}
-                  imgUrl={
-                    getImageUrlFromContent(blog.content) ||
-                    "/images/insights/fallback-blog-image.svg"
-                  }
-                  buttonText={`${blog.username}`}
-                  description={getDescriptionFromContent(blog.content) || ""}
-                  title={blog.title}
-                  handleClick={() => handleReadMore(blog)}
-                />
-              ))}
-            </div>
-          </div>
+         <BlogsPreview blogs={blogs} handleReadMore={handleReadMore} />
+
         </>
       )}
     </>
